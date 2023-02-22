@@ -12,7 +12,7 @@ export default function BoardDetailUI(props: IBoardDetailProps) {
             <S.Image
               src={
                 props.data?.fetchBoard.images?.length
-                  ? props.data?.fetchBoard.images[0]
+                  ? `https://storage.googleapis.com/${props.data?.fetchBoard.images[0]}`
                   : "https://i.pinimg.com/564x/fe/ea/bb/feeabbad8d01214c9cc82e5647467b47.jpg"
               }
             />
