@@ -1,22 +1,21 @@
 import { useRef, useState, type ChangeEvent } from "react";
 import { useMutation } from "@apollo/client";
 import {
+  type IMutationUpdateBoardArgs,
   type IMutation,
   type IMutationCreateBoardArgs,
   type IMutationUploadFileArgs,
 } from "../../../../commons/types/generated/types";
-import { useRouter } from "next/router";
 import BoardWriteUI from "./BoardWrite.presenter";
-import { CREATE_BOARD, UPLOAD_FILE } from "./BoardWrite.querys";
+import { CREATE_BOARD, UPDATE_BOARD, UPLOAD_FILE } from "./BoardWrite.querys";
+import { type IBoardWriteProps } from "./BoardWrite.types";
 
-export default function BoardWrite() {
-  const router = useRouter();
+export default function BoardWrite(props: IBoardWriteProps) {
   const fileRef = useRef<HTMLInputElement[] | null[]>([null, null, null]);
   const [writer, setWriter] = useState("");
   const [password, setPassword] = useState("");
   const [title, setTitle] = useState("");
-  const [contents, setContents] = useState("");
-  const [imageUrls, setImageUrls] = useState(["", "", ""]);
+  const [imageUrls, setImageUrls] = useState<string[]>([]);
   const [uploadFile] = useMutation<
     Pick<IMutation, "uploadFile">,
     IMutationUploadFileArgs
@@ -25,6 +24,10 @@ export default function BoardWrite() {
     Pick<IMutation, "createBoard">,
     IMutationCreateBoardArgs
   >(CREATE_BOARD);
+  const [updateBoard] = useMutation<
+    Pick<IMutation, "updateBoard">,
+    IMutationUpdateBoardArgs
+  >(UPDATE_BOARD);
   const [files, setFiles] = useState<File[]>([]);
 
   const onChangeWriter = (event: ChangeEvent<HTMLInputElement>) => {
@@ -40,7 +43,7 @@ export default function BoardWrite() {
   };
 
   const onChangeContents = (value: string) => {
-    setContents(value);
+    props.setContents(value);
   };
 
   const onClickImage = (index: number) => () => {
@@ -75,11 +78,17 @@ export default function BoardWrite() {
       fileReader.onload = (event) => {
         if (typeof event.target?.result === "string") {
           const tempUrls = [...imageUrls];
-          tempUrls[index] = event.target?.result;
-          setImageUrls(tempUrls);
-
           const tempFiles = [...files];
-          tempFiles[index] = file;
+
+          if (tempUrls[index]) {
+            tempUrls[index] = event.target?.result;
+            tempFiles[index] = file;
+          } else {
+            tempUrls.push(event.target?.result);
+            tempFiles.push(file);
+          }
+
+          setImageUrls(tempUrls);
           setFiles(tempFiles);
         }
       };
@@ -99,18 +108,49 @@ export default function BoardWrite() {
           writer,
           password,
           title,
-          contents,
+          contents: props.contents,
           images: resultUrls,
         },
       },
     });
 
-    void router.push(`/boards/${String(result.data?.createBoard._id)}`);
+    void props.router.push(`/boards/${String(result.data?.createBoard._id)}`);
+  };
+
+  const onClickEdit = async () => {
+    try {
+      const resultFiles = await Promise.all(
+        files.map((el) => el && uploadFile({ variables: { file: el } }))
+      );
+      const resultUrls = resultFiles.map((el) =>
+        el.data ? el.data?.uploadFile.url : ""
+      );
+
+      const updateBoardInput: any = {};
+      if (title) updateBoardInput.title = title;
+      if (props.contents) updateBoardInput.contents = props.contents;
+      if (resultUrls.length !== 0) updateBoardInput.images = resultUrls;
+
+      const result = await updateBoard({
+        variables: {
+          updateBoardInput,
+          password,
+          boardId: String(props.router.query.boardId),
+        },
+      });
+
+      void props.router.push(`/boards/${String(result.data?.updateBoard._id)}`);
+    } catch (error) {
+      if (error instanceof Error) alert(error.message);
+    }
   };
   return (
     <BoardWriteUI
       imageUrls={imageUrls}
       fileRef={fileRef}
+      isEdit={props.isEdit}
+      data={props.data}
+      contents={props.contents}
       onChangeWriter={onChangeWriter}
       onChangePassword={onChangePassword}
       onChangeTitle={onChangeTitle}
@@ -118,6 +158,7 @@ export default function BoardWrite() {
       onClickImage={onClickImage}
       onChangeUploadFile={onChangeUploadFile}
       onClickSubmit={onClickSubmit}
+      onClickEdit={onClickEdit}
     />
   );
 }

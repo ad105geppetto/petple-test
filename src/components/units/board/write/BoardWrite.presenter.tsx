@@ -1,23 +1,25 @@
 import * as S from "./BoardWrite.styles";
 import dynamic from "next/dynamic";
 import "react-quill/dist/quill.snow.css";
-import { type IBoardWriteProps } from "./BoardWrite.types";
+import { type IBoardWriteUIProps } from "./BoardWrite.types";
 
 const ReactQuill = dynamic(async () => await import("react-quill"), {
   ssr: false,
+  loading: () => <p>Loading ...</p>,
 });
 
-export default function BoardWriteUI(props: IBoardWriteProps) {
+export default function BoardWriteUI(props: IBoardWriteUIProps) {
   return (
     <S.Container>
       <S.Wrapper>
-        <S.H2>게시물 등록</S.H2>
+        <S.H2>게시물 {props.isEdit ? "수정" : "등록"}</S.H2>
         <S.TitleWrapperWithNonMember>
           <S.TitleWrapper>
             <S.H4>작성자</S.H4>
             <S.TitleInputWithNonMember
               type="text"
               onChange={props.onChangeWriter}
+              defaultValue={props.data && String(props.data?.fetchBoard.writer)}
             />
           </S.TitleWrapper>
           <S.TitleWrapper>
@@ -30,22 +32,27 @@ export default function BoardWriteUI(props: IBoardWriteProps) {
         </S.TitleWrapperWithNonMember>
         <S.TitleWrapper>
           <S.H4>제목</S.H4>
-          <S.TitleInput type="text" onChange={props.onChangeTitle} />
+          <S.TitleInput
+            type="text"
+            onChange={props.onChangeTitle}
+            defaultValue={props.data && String(props.data?.fetchBoard.title)}
+          />
         </S.TitleWrapper>
         <S.ContentsWrapper>
           <S.H4>내용</S.H4>
           <ReactQuill
             onChange={props.onChangeContents}
             style={{ height: "500px" }}
+            value={props.contents}
           />
         </S.ContentsWrapper>
         <S.H4>사진 첨부</S.H4>
         <S.ImageUploadGroup>
-          {props.imageUrls.map((imageUrl, index) => (
+          {new Array(3).fill("").map((_, index) => (
             <S.ImageUploadWrapper key={index}>
-              {imageUrl ? (
+              {props.imageUrls[index] ? (
                 <S.Image
-                  src={imageUrl}
+                  src={props.imageUrls[index]}
                   alt=""
                   onClick={props.onClickImage(index)}
                 />
@@ -67,7 +74,11 @@ export default function BoardWriteUI(props: IBoardWriteProps) {
           ))}
         </S.ImageUploadGroup>
         <S.RegisterWrapper>
-          <S.Register onClick={props.onClickSubmit}>등록하기</S.Register>
+          <S.Register
+            onClick={props.isEdit ? props.onClickEdit : props.onClickSubmit}
+          >
+            {props.isEdit ? "수정하기" : "등록하기"}
+          </S.Register>
         </S.RegisterWrapper>
       </S.Wrapper>
     </S.Container>
