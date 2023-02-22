@@ -6,7 +6,6 @@ export const FETCH_BOARDS_WITH_COUNT = gql`
       _id
       writer
       title
-      contents
       createdAt
     }
     fetchBoardsCount

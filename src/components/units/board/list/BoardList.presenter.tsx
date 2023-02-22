@@ -11,7 +11,7 @@ export default function BoardListUI(props: IBoardListProps) {
           <S.BoardItemsTop>
             <S.ItemNumber>번호</S.ItemNumber>
             <S.ItemTitleTop>제목</S.ItemTitleTop>
-            <S.ItemContents>작성자</S.ItemContents>
+            <S.ItemWriter>작성자</S.ItemWriter>
             <S.ItemDate>등록일자</S.ItemDate>
           </S.BoardItemsTop>
           {props.data?.fetchBoards.map((board, index) => (
@@ -26,7 +26,7 @@ export default function BoardListUI(props: IBoardListProps) {
                 </S.ItemNumber>
               )}
               <S.ItemTitle>{board.title}</S.ItemTitle>
-              <S.ItemContents>{board.contents}</S.ItemContents>
+              <S.ItemWriter>{board.writer}</S.ItemWriter>
               <S.ItemDate>{getDate(board.createdAt)}</S.ItemDate>
             </S.BoardItems>
           ))}

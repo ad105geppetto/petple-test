@@ -56,7 +56,7 @@ export const ItemTitle = styled.div`
   text-align: left;
 `;
 
-export const ItemContents = styled.div`
+export const ItemWriter = styled.div`
   display: inline-block;
   vertical-align: middle;
   width: 15%;
