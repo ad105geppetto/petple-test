@@ -4,27 +4,38 @@ import Dompurify from "dompurify";
 import { type IBoardDetailProps } from "./BoardDetail.types";
 import CommentWrite from "../../comment/write/CommentWrite.container";
 import CommentList from "../../comment/list/CommentList.container";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
+const settings = {
+  dots: true,
+  infinite: true,
+  speed: 500,
+  slidesToShow: 1,
+  slidesToScroll: 1,
+};
 
 export default function BoardDetailUI(props: IBoardDetailProps) {
   return (
     <S.Container>
       <S.Wrapper>
-        <S.ImageWrapper>
-          {
-            <S.Image
-              src={
-                props.data?.fetchBoard.images?.length
-                  ? `https://storage.googleapis.com/${props.data?.fetchBoard.images[0]}`
-                  : "https://i.pinimg.com/564x/fe/ea/bb/feeabbad8d01214c9cc82e5647467b47.jpg"
-              }
-            />
-          }
-          {props.data?.fetchBoard.images?.length ? (
-            ""
-          ) : (
-            <S.ImageText>이미지 없음</S.ImageText>
-          )}
-        </S.ImageWrapper>
+        <S.SliderWrapper>
+          <Slider {...settings}>
+            {props.data?.fetchBoard.images?.length ? (
+              props.data?.fetchBoard.images?.map((image, index) => (
+                <S.ImageWrapper key={index}>
+                  {<S.Image src={`https://storage.googleapis.com/${image}`} />}
+                </S.ImageWrapper>
+              ))
+            ) : (
+              <S.ImageWrapper>
+                <S.Image src="https://i.pinimg.com/564x/fe/ea/bb/feeabbad8d01214c9cc82e5647467b47.jpg" />
+                <S.ImageText>이미지 없음</S.ImageText>
+              </S.ImageWrapper>
+            )}
+          </Slider>
+        </S.SliderWrapper>
         <S.ProfileWrapper>
           <S.Profile src="/profile.webp" />
           <S.UserWrapper>

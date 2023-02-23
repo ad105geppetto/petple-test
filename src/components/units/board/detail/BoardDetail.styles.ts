@@ -10,6 +10,11 @@ export const Wrapper = styled.div`
   width: 1156px;
 `;
 
+export const SliderWrapper = styled.div`
+  margin-top: 50px;
+  margin-bottom: 70px;
+`;
+
 export const ImageWrapper = styled.div`
   display: flex;
   flex-direction: row;
@@ -20,11 +25,13 @@ export const ImageWrapper = styled.div`
 export const Image = styled.img`
   width: 677px;
   height: 500px;
+  margin: 0 auto;
 `;
 
 export const ImageText = styled.div`
   position: absolute;
   top: 60%;
+  left: 25%;
   font-size: 100px;
   color: #999;
 `;
