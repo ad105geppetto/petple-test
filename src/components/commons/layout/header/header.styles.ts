@@ -55,11 +55,16 @@ export const Login = styled.div`
   position: absolute;
   top: 50%;
   transform: translate(0, -50%);
-  background-color: #88e25d;
+  background-color: #749c06;
   border-radius: 5px;
   color: white;
   font-weight: bold;
   cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  &:hover {
+    background-color: #000000;
+    transition: background-color 0.3s ease-in-out;
+  }
 `;
 
 export const SignupWapper = styled.div`
@@ -76,9 +81,14 @@ export const Signup = styled.div`
   position: absolute;
   top: 50%;
   transform: translate(0, -50%);
-  background-color: #88e25d;
+  background-color: #749c06;
   border-radius: 5px;
   color: white;
   font-weight: bold;
   cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+  &:hover {
+    background-color: #000000;
+    transition: background-color 0.3s ease-in-out;
+  }
 `;
