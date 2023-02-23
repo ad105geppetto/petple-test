@@ -2,6 +2,7 @@ import { getDate } from "../../../../commons/utils/utils";
 import * as S from "./BoardDetail.styles";
 import Dompurify from "dompurify";
 import { type IBoardDetailProps } from "./BoardDetail.types";
+import CommentWrite from "../../comment/write/CommentWrite.container";
 
 export default function BoardDetailUI(props: IBoardDetailProps) {
   return (
@@ -46,6 +47,7 @@ export default function BoardDetailUI(props: IBoardDetailProps) {
           <S.ButtonItem onClick={props.onClickList}>목록으로</S.ButtonItem>
           <S.ButtonItem onClick={props.onClickUpdate}>수정하기</S.ButtonItem>
         </S.ButtonItemWrapper>
+        <CommentWrite />
       </S.Wrapper>
     </S.Container>
   );
