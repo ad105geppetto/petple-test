@@ -2,16 +2,19 @@ import { useMutation } from "@apollo/client";
 import { type ChangeEvent, useState } from "react";
 import { useRouter } from "next/router";
 import {
+  type IMutationUpdateBoardCommentArgs,
   type IMutation,
   type IMutationCreateBoardCommentArgs,
 } from "../../../../commons/types/generated/types";
 import {
   CREATE_BOARD_COMMENT,
   FETCH_BOARD_COMMENTS,
-} from "./CommentWrite.query";
+  UPDATE_BOARD_COMMENT,
+} from "./CommentWrite.querys";
 import CommentWriteUI from "./CommentWrite.presenter";
+import { type ICommentWriteProps } from "./CommentWrite.types";
 
-export default function CommentWrite() {
+export default function CommentWrite(props: ICommentWriteProps) {
   const router = useRouter();
   const [writer, setWriter] = useState("");
   const [password, setPassword] = useState("");
@@ -21,6 +24,17 @@ export default function CommentWrite() {
     Pick<IMutation, "createBoardComment">,
     IMutationCreateBoardCommentArgs
   >(CREATE_BOARD_COMMENT, {
+    refetchQueries: () => [
+      {
+        query: FETCH_BOARD_COMMENTS,
+        variables: { boardId: String(router.query.boardId) },
+      },
+    ],
+  });
+  const [updateBoardComment] = useMutation<
+    Pick<IMutation, "updateBoardComment">,
+    IMutationUpdateBoardCommentArgs
+  >(UPDATE_BOARD_COMMENT, {
     refetchQueries: () => [
       {
         query: FETCH_BOARD_COMMENTS,
@@ -74,15 +88,45 @@ export default function CommentWrite() {
     setContents("");
   };
 
+  const onClickUpdate = async () => {
+    if (!password) {
+      alert("댓글 비밀번호를 입력해주세요.");
+      return;
+    }
+    if (!contents) {
+      alert("댓글을 입력해주세요.");
+      return;
+    }
+
+    await updateBoardComment({
+      variables: {
+        updateBoardCommentInput: {
+          contents,
+          rating: 0,
+        },
+        password,
+        boardCommentId: props.boardCommentId,
+      },
+    });
+
+    props.setIsEdit(false);
+    props.setEditCommentId("");
+    setPassword("");
+    setContents("");
+  };
+
   return (
     <CommentWriteUI
       writer={writer}
       password={password}
       contents={contents}
+      isEdit={props.isEdit}
+      editWriter={props.editWriter}
       onChangeWriter={onChangeWriter}
       onChangePassword={onChangePassword}
       onChangeContents={onChangeContents}
       onClickSubmit={onClickSubmit}
+      onClickUpdate={onClickUpdate}
     />
   );
 }

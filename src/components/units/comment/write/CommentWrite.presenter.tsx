@@ -6,19 +6,24 @@ import { type ICommentWriteUIProps } from "./CommentWrite.types";
 export default function CommentWriteUI(props: ICommentWriteUIProps) {
   return (
     <>
-      <S.TitleWrapper>
-        <Space>
-          <CommentOutlined />
-        </Space>
-        <S.H5>댓글</S.H5>
-      </S.TitleWrapper>
+      {props.isEdit ? (
+        ""
+      ) : (
+        <S.TitleWrapper>
+          <Space>
+            <CommentOutlined />
+          </Space>
+          <S.H5>댓글</S.H5>
+        </S.TitleWrapper>
+      )}
       <S.Label htmlFor="writer">작성자</S.Label>
       <S.UserInput
         type="text"
         id="writer"
         onChange={props.onChangeWriter}
-        value={props.writer}
+        value={props.isEdit ? props.editWriter : props.writer}
         autoComplete="off"
+        readOnly={props.isEdit}
       />
       <S.Label htmlFor="password">비밀번호</S.Label>
       <S.UserInput
@@ -36,7 +41,11 @@ export default function CommentWriteUI(props: ICommentWriteUIProps) {
           autoComplete="off"
         />
         <S.CommentLimit>{props.contents.length} / 100</S.CommentLimit>
-        <S.SubmitButton onClick={props.onClickSubmit}>댓글 작성</S.SubmitButton>
+        <S.SubmitButton
+          onClick={props.isEdit ? props.onClickUpdate : props.onClickSubmit}
+        >
+          댓글 {props.isEdit ? "수정" : "작성"}
+        </S.SubmitButton>
       </S.CommentWrapper>
     </>
   );
