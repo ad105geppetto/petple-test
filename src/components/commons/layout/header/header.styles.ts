@@ -40,6 +40,20 @@ export const Search = styled.input`
   border-radius: 27px;
 `;
 
+export const LogoutWapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 120px;
+  position: relative;
+  margin-right: 23px;
+`;
+
+export const Logout = styled.div`
+  font-weight: bold;
+`;
+
 export const LoginWapper = styled.div`
   width: 120px;
   position: relative;
