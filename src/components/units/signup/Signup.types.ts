@@ -11,4 +11,10 @@ export interface ISignupUIProps {
   passwordCheckError: boolean;
   passwordEqualError: boolean;
   onClickSignup: () => void;
+  isSignup: boolean;
+  onClickLogin: () => void;
+}
+
+export interface ISignupProps {
+  isSignup: boolean;
 }

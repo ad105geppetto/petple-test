@@ -1,15 +1,21 @@
 import { useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
 import { type ChangeEvent, useState } from "react";
+import { useSetRecoilState } from "recoil";
+import { accessTokenState, isLoginState } from "../../../commons/store";
 import {
+  type IMutationLoginUserArgs,
   type IMutation,
   type IMutationCreateUserArgs,
 } from "../../../commons/types/generated/types";
 import SignupUI from "./Signup.presenter";
-import { CREATE_USER } from "./Signup.querys";
+import { CREATE_USER, LOGIN_USER } from "./Signup.querys";
+import { type ISignupProps } from "./Signup.types";
 
-export default function Signup() {
+export default function Signup(props: ISignupProps) {
   const router = useRouter();
+  const setIsLogin = useSetRecoilState(isLoginState);
+  const setAccessToken = useSetRecoilState(accessTokenState);
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -26,6 +32,10 @@ export default function Signup() {
     Pick<IMutation, "createUser">,
     IMutationCreateUserArgs
   >(CREATE_USER);
+  const [loginUser] = useMutation<
+    Pick<IMutation, "loginUser">,
+    IMutationLoginUserArgs
+  >(LOGIN_USER);
 
   const onChangeName = (event: ChangeEvent<HTMLInputElement>) => {
     if (!event.target.value) {
@@ -107,6 +117,46 @@ export default function Signup() {
     }
   };
 
+  const onClickLogin = async () => {
+    if (!email || !password) {
+      if (!email) setEmailError(true);
+      if (!password) setPasswordError(true);
+
+      alert("필수 정보를 입력해주세요.");
+      return;
+    }
+
+    // eslint-disable-next-line no-useless-escape
+    const regex = /[0-9a-zA-Z]+\@[0-9a-zA-Z]+\.[a-zA-Z]+/g;
+
+    if (!regex.test(email)) {
+      alert("이메일을 입력해주세요.");
+      return;
+    }
+
+    try {
+      const result = await loginUser({
+        variables: {
+          email,
+          password,
+        },
+      });
+      const accessToken = result.data?.loginUser.accessToken;
+
+      if (!accessToken) {
+        alert("로그인에 실패하였습니다.");
+        return;
+      }
+
+      setAccessToken(accessToken);
+      setIsLogin(true);
+
+      void router.replace("/boards");
+    } catch (error) {
+      if (error instanceof Error) alert(error.message);
+    }
+  };
+
   return (
     <SignupUI
       onChangeName={onChangeName}
@@ -119,6 +169,8 @@ export default function Signup() {
       passwordCheckError={passwordCheckError}
       passwordEqualError={passwordEqualError}
       onClickSignup={onClickSignup}
+      isSignup={props.isSignup}
+      onClickLogin={onClickLogin}
     />
   );
 }
