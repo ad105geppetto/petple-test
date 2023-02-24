@@ -1,7 +1,7 @@
 import { gql, useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { accessTokenState, isLoginState } from "../../../../commons/store";
+import { useRecoilState } from "recoil";
+import { accessTokenState } from "../../../../commons/store";
 import { type IQuery } from "../../../../commons/types/generated/types";
 import * as S from "./header.styles";
 
@@ -17,12 +17,11 @@ const FETCH_USER_LOGGED_IN = gql`
 
 export default function LayoutHeader() {
   const router = useRouter();
-  const [isLogin, setIsLogin] = useRecoilState(isLoginState);
 
   const { data } =
     useQuery<Pick<IQuery, "fetchUserLoggedIn">>(FETCH_USER_LOGGED_IN);
 
-  const setAccessToken = useSetRecoilState(accessTokenState);
+  const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
 
   const onClickMoveToSignup = () => {
     void router.push("/signup");
@@ -35,8 +34,8 @@ export default function LayoutHeader() {
   const onClickMoveToLogout = () => {
     const result = confirm("로그아웃 하시겠습니까?");
     if (result) {
+      localStorage.removeItem("accessToken");
       setAccessToken("");
-      setIsLogin(false);
     }
   };
 
@@ -47,7 +46,7 @@ export default function LayoutHeader() {
         <S.SearchWapper>
           <S.Search type="text" />
         </S.SearchWapper>
-        {isLogin ? (
+        {accessToken ? (
           <>
             <S.LogoutWapper>
               <S.Logout>{data?.fetchUserLoggedIn.name} 님</S.Logout>

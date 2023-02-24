@@ -2,7 +2,7 @@ import { useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
 import { type ChangeEvent, useState } from "react";
 import { useSetRecoilState } from "recoil";
-import { accessTokenState, isLoginState } from "../../../commons/store";
+import { accessTokenState } from "../../../commons/store";
 import {
   type IMutationLoginUserArgs,
   type IMutation,
@@ -14,7 +14,6 @@ import { type ISignupProps } from "./Signup.types";
 
 export default function Signup(props: ISignupProps) {
   const router = useRouter();
-  const setIsLogin = useSetRecoilState(isLoginState);
   const setAccessToken = useSetRecoilState(accessTokenState);
 
   const [name, setName] = useState("");
@@ -148,8 +147,8 @@ export default function Signup(props: ISignupProps) {
         return;
       }
 
+      localStorage.setItem("accessToken", accessToken);
       setAccessToken(accessToken);
-      setIsLogin(true);
 
       void router.replace("/boards");
     } catch (error) {
