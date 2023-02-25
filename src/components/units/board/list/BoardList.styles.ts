@@ -1,16 +1,6 @@
 import styled from "@emotion/styled";
 import { type IClickButtonProps } from "./BoardList.types";
 
-export const Container = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-`;
-
-export const Wrapper = styled.div`
-  width: 1156px;
-`;
-
 export const SearchWrapper = styled.div`
   background-color: yellow;
   margin-bottom: 64px;
