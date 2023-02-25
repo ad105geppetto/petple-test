@@ -1,15 +1,5 @@
 import styled from "@emotion/styled";
 
-export const Container = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-`;
-
-export const Wrapper = styled.div`
-  width: 1156px;
-`;
-
 export const SliderWrapper = styled.div`
   margin-top: 50px;
   margin-bottom: 70px;

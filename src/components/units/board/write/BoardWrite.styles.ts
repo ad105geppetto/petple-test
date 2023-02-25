@@ -1,15 +1,5 @@
 import styled from "@emotion/styled";
 
-export const Container = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-`;
-
-export const Wrapper = styled.div`
-  width: 1156px;
-`;
-
 export const H2 = styled.h2`
   text-align: center;
   font-size: 36px;
