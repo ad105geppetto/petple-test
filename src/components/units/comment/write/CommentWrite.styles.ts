@@ -12,6 +12,15 @@ export const H5 = styled.h5`
   padding-left: 10px;
 `;
 
+export const Wrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+
+  @media screen and (max-width: 610px) {
+    flex-direction: column;
+  }
+`;
+
 export const Label = styled.label`
   font-weight: 600;
   margin-right: 10px;
@@ -23,6 +32,10 @@ export const UserInput = styled.input`
   padding: 10px;
   &:focus {
     outline: none;
+  }
+
+  @media screen and (max-width: 610px) {
+    margin-right: 0;
   }
 `;
 
@@ -51,12 +64,13 @@ export const SubmitButton = styled.button`
   height: 52px;
   bottom: 0px;
   right: 0px;
-  background-color: #000000;
+  background-color: #749c06;
   color: #ffffff;
+  border: 2px solid #749c06;
   border-radius: 2px;
   cursor: pointer;
   &:hover {
-    background-color: #88e25d;
-    border: 2px solid #88e25d;
+    background-color: #000000;
+    border: 2px solid #000000;
   }
 `;

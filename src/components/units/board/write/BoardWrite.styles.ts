@@ -11,11 +11,22 @@ export const TitleWrapperWithNonMember = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+
+  @media screen and (max-width: 767px) {
+    flex-direction: column;
+  }
 `;
 
 export const TitleInputWithNonMember = styled.input`
-  width: 550px;
+  width: 500px;
   padding: 12.5px 15px;
+
+  @media screen and (max-width: 767px) {
+    width: 100%;
+  }
+  @media screen and (min-width: 768px) and (max-width: 1023px) {
+    width: 372px;
+  }
 `;
 
 export const TitleWrapper = styled.div`
@@ -88,13 +99,17 @@ export const Register = styled.div`
   height: 52px;
   margin-bottom: 50px;
   font-size: 16px;
-  font-weight: 400;
-  border: 1px solid #999;
+  font-weight: 700;
+  border: 1px solid #749c06;
   border-radius: 3px;
+  background-color: #749c06;
+  color: #ffffff;
+  transition: background-color 0.3s ease-in-out;
   cursor: pointer;
   &:hover {
-    background-color: #88e25d;
+    background-color: #000000;
     color: #ffffff;
-    border: 1px solid #88e25d;
+    border: 1px solid #000000;
+    transition: background-color 0.3s ease-in-out;
   }
 `;

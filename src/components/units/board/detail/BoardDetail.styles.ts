@@ -16,6 +16,11 @@ export const Image = styled.img`
   width: 677px;
   height: 500px;
   margin: 0 auto;
+
+  @media screen and (max-width: 767px) {
+    width: 350px;
+    height: 300px;
+  }
 `;
 
 export const ImageText = styled.div`
@@ -24,6 +29,15 @@ export const ImageText = styled.div`
   left: 25%;
   font-size: 100px;
   color: #999;
+
+  @media screen and (max-width: 767px) {
+    left: 20%;
+    font-size: 50px;
+  }
+  @media screen and (min-width: 768px) and (max-width: 1023px) {
+    left: 25%;
+    font-size: 80px;
+  }
 `;
 
 export const ProfileWrapper = styled.div`
@@ -77,13 +91,17 @@ export const ButtonItem = styled.div`
   height: 52px;
   margin: 0 12px;
   font-size: 16px;
-  font-weight: 400;
+  font-weight: 700;
   border: 1px solid #999;
   border-radius: 3px;
+  background-color: #749c06;
+  color: #ffffff;
+  transition: background-color 0.3s ease-in-out;
   cursor: pointer;
   &:hover {
-    background-color: #88e25d;
+    background-color: #000000;
     color: #ffffff;
-    border: 1px solid #88e25d;
+    border: 1px solid #000000;
+    transition: background-color 0.3s ease-in-out;
   }
 `;

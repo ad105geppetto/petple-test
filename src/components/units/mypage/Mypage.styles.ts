@@ -13,6 +13,11 @@ export const InputWrapper = styled.div`
   justify-content: space-between;
   margin-bottom: 30px;
   font-weight: 700;
+
+  @media screen and (max-width: 767px) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 `;
 
 export const Input = styled.input`
@@ -22,6 +27,14 @@ export const Input = styled.input`
   border-radius: 3px;
   &:focus {
     outline: none;
+  }
+
+  @media screen and (max-width: 767px) {
+    width: 100%;
+    margin-top: 10px;
+  }
+  @media screen and (min-width: 768px) and (max-width: 1023px) {
+    width: 70%;
   }
 `;
 

@@ -51,6 +51,10 @@ export const ItemWriter = styled.div`
   vertical-align: middle;
   width: 15%;
   text-align: center;
+
+  @media screen and (max-width: 767px) {
+    width: 30%;
+  }
 `;
 
 export const ItemDate = styled.div`
@@ -58,6 +62,10 @@ export const ItemDate = styled.div`
   vertical-align: middle;
   width: 15%;
   text-align: center;
+
+  @media screen and (max-width: 767px) {
+    display: none;
+  }
 `;
 
 export const BoardPageWrapper = styled.div`
@@ -81,7 +89,7 @@ export const PageButton = styled.div`
   padding-top: 4px;
   font-size: 1.2rem;
   color: ${(props: IClickButtonProps) =>
-    props.isActive ? "#88E25D" : "default"};
+    props.isActive ? "#749c06" : "default"};
   cursor: pointer;
   &:first-of-type {
     border-left: 1px solid #999;
@@ -112,10 +120,21 @@ export const Register = styled.div`
   border: 1px solid #999;
   border-radius: 3px;
   font-weight: 600;
+  background-color: #749c06;
+  color: #ffffff;
+  transition: background-color 0.3s ease-in-out;
   cursor: pointer;
   &:hover {
-    background-color: #88e25d;
+    background-color: #000000;
     color: #ffffff;
-    border: none;
+    transition: background-color 0.3s ease-in-out;
+  }
+
+  @media screen and (max-width: 767px) {
+    top: 50px;
+    left: 44%;
+  }
+  @media screen and (min-width: 768px) and (max-width: 1023px) {
+    left: 85%;
   }
 `;
