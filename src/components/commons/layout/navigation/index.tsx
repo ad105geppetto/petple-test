@@ -1,6 +1,6 @@
 import * as S from "./navigation.styles";
 import { useRouter } from "next/router";
-import { type MouseEvent } from "react";
+import { useState, type MouseEvent } from "react";
 
 const NAVIGATION_MANUS = [
   { name: "홈", page: "/" },
@@ -10,19 +10,39 @@ const NAVIGATION_MANUS = [
 
 export default function LayoutNavigation() {
   const router = useRouter();
+  const [isOpen, setIsOpen] = useState(false);
+
   const onClickMenu = (event: MouseEvent<HTMLDivElement>) => {
+    setIsOpen(!isOpen);
     void router.push(event.currentTarget.id);
   };
+  const onClickHamburgerMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
     <S.Container>
       <S.Wapper>
-        {NAVIGATION_MANUS.map((menu, index) => (
-          <div key={index}>
-            <S.MenuItem id={menu.page} onClick={onClickMenu}>
+        <S.HamburgerMenuWrapper onClick={onClickHamburgerMenu}>
+          <S.HamburgerMenu>
+            <span></span>
+            <span></span>
+            <span></span>
+          </S.HamburgerMenu>
+          <S.CategoryTitle>메뉴</S.CategoryTitle>
+        </S.HamburgerMenuWrapper>
+        <S.DropdownMenu>
+          {NAVIGATION_MANUS.map((menu, index) => (
+            <S.MenuItem
+              key={index}
+              id={menu.page}
+              isOpen={isOpen}
+              onClick={onClickMenu}
+            >
               {menu.name}
             </S.MenuItem>
-          </div>
-        ))}
+          ))}
+        </S.DropdownMenu>
       </S.Wapper>
     </S.Container>
   );

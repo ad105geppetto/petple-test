@@ -2,9 +2,16 @@ import styled from "@emotion/styled";
 import { UserOutlined } from "@ant-design/icons";
 
 export const Wrapper = styled.div`
-  width: 20%;
+  width: 30%;
   padding: 0px 50px;
   margin-top: 64px;
+
+  @media screen and (max-width: 767px) {
+    display: none;
+  }
+  @media screen and (min-width: 768px) and (max-width: 1023px) {
+    width: 35%;
+  }
 `;
 
 export const Mypage = styled.h2`

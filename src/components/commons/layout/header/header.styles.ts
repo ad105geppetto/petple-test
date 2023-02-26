@@ -87,7 +87,7 @@ export const Group = styled.div`
   width: 28%;
 
   @media screen and (max-width: 767px) {
-    display: none;
+    width: 280px;
   }
   @media screen and (min-width: 768px) and (max-width: 1023px) {
     width: 33%;
@@ -136,6 +136,10 @@ export const Login = styled.div`
 export const SignupWapper = styled.div`
   width: 120px;
   position: relative;
+
+  @media screen and (max-width: 767px) {
+    margin-right: 20px;
+  }
 `;
 
 export const Signup = styled.div`
