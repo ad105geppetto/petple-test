@@ -17,6 +17,10 @@ export const Title = styled.h2`
 export const Group = styled.div`
   width: 460px;
   margin-bottom: 50px;
+
+  @media screen and (max-width: 460px) {
+    width: 100%;
+  }
 `;
 
 export const H3 = styled.h3`

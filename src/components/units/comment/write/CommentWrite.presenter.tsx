@@ -16,23 +16,29 @@ export default function CommentWriteUI(props: ICommentWriteUIProps) {
           <S.H5>댓글</S.H5>
         </S.TitleWrapper>
       )}
-      <S.Label htmlFor="writer">작성자</S.Label>
-      <S.UserInput
-        type="text"
-        id="writer"
-        onChange={props.onChangeWriter}
-        value={props.isEdit ? props.editWriter : props.writer}
-        autoComplete="off"
-        readOnly={props.isEdit}
-      />
-      <S.Label htmlFor="password">비밀번호</S.Label>
-      <S.UserInput
-        type="password"
-        id="password"
-        onChange={props.onChangePassword}
-        value={props.password}
-        autoComplete="off"
-      />
+      <S.Wrapper>
+        <>
+          <S.Label htmlFor="writer">작성자</S.Label>
+          <S.UserInput
+            type="text"
+            id="writer"
+            onChange={props.onChangeWriter}
+            value={props.isEdit ? props.editWriter : props.writer}
+            autoComplete="off"
+            readOnly={props.isEdit}
+          />
+        </>
+        <>
+          <S.Label htmlFor="password">비밀번호</S.Label>
+          <S.UserInput
+            type="password"
+            id="password"
+            onChange={props.onChangePassword}
+            value={props.password}
+            autoComplete="off"
+          />
+        </>
+      </S.Wrapper>
       <S.CommentWrapper>
         <S.CommentInput
           type="text"

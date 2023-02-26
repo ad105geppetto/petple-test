@@ -47,23 +47,23 @@ export default function LayoutHeader() {
           <S.Search type="text" />
         </S.SearchWapper>
         {accessToken ? (
-          <>
+          <S.Group>
             <S.LogoutWapper>
               <S.Logout>{data?.fetchUserLoggedIn.name} 님</S.Logout>
             </S.LogoutWapper>
             <S.SignupWapper>
               <S.Signup onClick={onClickMoveToLogout}>로그아웃</S.Signup>
             </S.SignupWapper>
-          </>
+          </S.Group>
         ) : (
-          <>
+          <S.Group>
             <S.LoginWapper>
               <S.Login onClick={onClickMoveToLogin}>로그인</S.Login>
             </S.LoginWapper>
             <S.SignupWapper>
               <S.Signup onClick={onClickMoveToSignup}>회원가입</S.Signup>
             </S.SignupWapper>
-          </>
+          </S.Group>
         )}
       </S.Wapper>
     </S.Container>

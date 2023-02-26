@@ -9,7 +9,14 @@ export const Container = styled.div`
 export const Wapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 1156px;
+  width: 1024px;
+
+  @media screen and (max-width: 767px) {
+    width: 100%;
+  }
+  @media screen and (min-width: 768px) and (max-width: 1023px) {
+    width: 767px;
+  }
 `;
 
 export const Title = styled.h2`
@@ -22,13 +29,33 @@ export const Title = styled.h2`
 export const ItemsWrapper = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
   grid-column-gap: 48px;
   grid-row-gap: 129px;
   margin-bottom: 150px;
+
+  @media screen and (max-width: 767px) {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+  }
+  @media screen and (min-width: 768px) and (max-width: 1023px) {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+  }
 `;
 
 export const ItemsGroup = styled.div`
   height: 229px;
+  @media screen and (max-width: 767px) {
+    &:nth-of-type(n + 5):nth-of-type(-n + 8) {
+      display: none;
+    }
+  }
+  @media screen and (min-width: 768px) and (max-width: 1023px) {
+    &:nth-of-type(n + 7):nth-of-type(-n + 8) {
+      display: none;
+    }
+  }
 `;
 
 export const ItemsImages = styled.img`

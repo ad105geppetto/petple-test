@@ -5,31 +5,62 @@ export const Container = styled.div`
   flex-direction: row;
   justify-content: center;
   height: 120px;
+
+  @media screen and (max-width: 767px) {
+    height: 80px;
+  }
+  @media screen and (min-width: 768px) and (max-width: 1023px) {
+    height: 100px;
+  }
 `;
 
 export const Wapper = styled.div`
   display: flex;
   flex-direction: row;
-  width: 1156px;
+  justify-content: space-between;
+  width: 1024px;
+
+  @media screen and (max-width: 767px) {
+    width: 100%;
+  }
+  @media screen and (min-width: 768px) and (max-width: 1023px) {
+    width: 767px;
+  }
 `;
 
 export const LogoWapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 212px;
+  width: 10%;
   font-style: italic;
   font-size: 32px;
   font-weight: bold;
-  margin-right: 118px;
+
+  @media screen and (max-width: 767px) {
+    width: 30%;
+    font-size: 22px;
+  }
+  @media screen and (min-width: 768px) and (max-width: 1023px) {
+    width: 10%;
+    font-size: 22px;
+  }
 `;
 
 export const SearchWapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 496px;
-  margin-right: 67px;
+  width: 72%;
+  padding: 0 50px;
+
+  @media screen and (max-width: 767px) {
+    display: none;
+  }
+  @media screen and (min-width: 768px) and (max-width: 1023px) {
+    width: 57%;
+    padding: 0px 30px 0px 60px;
+  }
 `;
 
 export const Search = styled.input`
@@ -38,6 +69,29 @@ export const Search = styled.input`
   padding: 0 27px;
   border: 1px solid #e1e1e1;
   border-radius: 27px;
+
+  @media screen and (max-width: 767px) {
+    display: none;
+  }
+  @media screen and (min-width: 768px) and (max-width: 1023px) {
+    height: 40px;
+    border-radius: 20px;
+    padding: 0px 30px 0px 60px;
+  }
+`;
+
+export const Group = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 28%;
+
+  @media screen and (max-width: 767px) {
+    display: none;
+  }
+  @media screen and (min-width: 768px) and (max-width: 1023px) {
+    width: 33%;
+  }
 `;
 
 export const LogoutWapper = styled.div`
@@ -47,7 +101,6 @@ export const LogoutWapper = styled.div`
   align-items: center;
   width: 120px;
   position: relative;
-  margin-right: 23px;
 `;
 
 export const Logout = styled.div`
@@ -57,7 +110,6 @@ export const Logout = styled.div`
 export const LoginWapper = styled.div`
   width: 120px;
   position: relative;
-  margin-right: 23px;
 `;
 
 export const Login = styled.div`

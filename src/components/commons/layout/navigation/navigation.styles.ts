@@ -5,6 +5,10 @@ export const Container = styled.div`
   flex-direction: row;
   justify-content: center;
   height: 53px;
+
+  @media screen and (max-width: 767px) {
+    display: none;
+  }
 `;
 
 export const Wapper = styled.div`
@@ -12,8 +16,13 @@ export const Wapper = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  width: 1156px;
+  width: 1024px;
   padding: 0 232px;
+
+  @media screen and (min-width: 768px) and (max-width: 1023px) {
+    width: 767px;
+    padding: 0 132px;
+  }
 `;
 
 export const MenuItem = styled.div`
