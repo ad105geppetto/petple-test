@@ -14,7 +14,7 @@ export default function BoardList() {
   const { data, refetch } = useQuery<
     Pick<IQuery, "fetchBoards" | "fetchBoardsCount">,
     IQueryFetchBoardsArgs | IQueryFetchBoardsCountArgs
-  >(FETCH_BOARDS_WITH_COUNT);
+  >(FETCH_BOARDS_WITH_COUNT, { fetchPolicy: "network-only" });
 
   const [startPage, setStartPage] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
