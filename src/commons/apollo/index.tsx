@@ -27,8 +27,8 @@ export default function ApolloClientSettings(props: IProps) {
         if (err.extensions.code === "UNAUTHENTICATED") {
           return fromPromise(
             getAccessToken().then((newAccessToken) => {
-              setAccessToken(newAccessToken);
               if (typeof newAccessToken !== "string") return;
+              setAccessToken(newAccessToken);
               operation.setContext({
                 headers: {
                   ...operation.getContext().headers,
@@ -48,7 +48,7 @@ export default function ApolloClientSettings(props: IProps) {
   }, []);
 
   const uploadLink = createUploadLink({
-    uri: "https://backendonline.codebootcamp.co.kr/graphql",
+    uri: process.env.NEXT_PUBLIC_URI,
     credentials: "include",
     headers: { Authorization: `Bearer ${accessToken}` },
   });

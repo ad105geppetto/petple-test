@@ -18,7 +18,11 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
           <S.TitleInputWithNonMember
             type="text"
             onChange={props.onChangeWriter}
-            defaultValue={props.data && String(props.data?.fetchBoard.writer)}
+            value={
+              props.isEdit
+                ? String(props.data?.fetchBoard.writer)
+                : props.writer
+            }
           />
         </S.TitleWrapper>
         <S.TitleWrapper>

@@ -16,6 +16,10 @@ const settings = {
   slidesToScroll: 1,
 };
 
+const NEXT_PUBLIC_IMAGE_STORE_URI = process.env.NEXT_PUBLIC_IMAGE_STORE_URI
+  ? process.env.NEXT_PUBLIC_IMAGE_STORE_URI
+  : "";
+
 export default function BoardDetailUI(props: IBoardDetailProps) {
   return (
     <>
@@ -24,12 +28,12 @@ export default function BoardDetailUI(props: IBoardDetailProps) {
           {props.data?.fetchBoard.images?.length ? (
             props.data?.fetchBoard.images?.map((image, index) => (
               <S.ImageWrapper key={index}>
-                {<S.Image src={`https://storage.googleapis.com/${image}`} />}
+                {<S.Image src={`${NEXT_PUBLIC_IMAGE_STORE_URI}/${image}`} />}
               </S.ImageWrapper>
             ))
           ) : (
             <S.ImageWrapper>
-              <S.Image src="https://i.pinimg.com/564x/fe/ea/bb/feeabbad8d01214c9cc82e5647467b47.jpg" />
+              <S.Image src={process.env.NEXT_PUBLIC_DEFAULT_IMAGE_URI} />
               <S.ImageText>이미지 없음</S.ImageText>
             </S.ImageWrapper>
           )}

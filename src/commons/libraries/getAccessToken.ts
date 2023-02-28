@@ -1,4 +1,5 @@
 import { gql, GraphQLClient } from "graphql-request";
+import { type IMutation } from "../types/generated/types";
 
 const RESTORE_ACCESS_TOKEN = gql`
   mutation restoreAccessToken {
@@ -10,14 +11,18 @@ const RESTORE_ACCESS_TOKEN = gql`
 
 export const getAccessToken = async () => {
   try {
-    const graphQLClient = new GraphQLClient(
-      "https://backendonline.codebootcamp.co.kr/graphql",
-      {
-        credentials: "include",
-      }
-    );
-    const result = await graphQLClient.request(RESTORE_ACCESS_TOKEN);
+    if (!process.env.NEXT_PUBLIC_URI) return;
+
+    const graphQLClient = new GraphQLClient(process.env.NEXT_PUBLIC_URI, {
+      credentials: "include",
+    });
+    const result = await graphQLClient.request<
+      Pick<IMutation, "restoreAccessToken">
+    >(RESTORE_ACCESS_TOKEN);
+
     const newAccessToken = result.restoreAccessToken.accessToken;
+
+    if (typeof newAccessToken !== "string") return;
 
     return newAccessToken;
   } catch (error) {

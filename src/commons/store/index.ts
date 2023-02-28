@@ -5,3 +5,8 @@ export const accessTokenState = atom({
   key: `accessTokenState/${uuidv4()}`,
   default: "",
 });
+
+export const currentPageState = atom({
+  key: `currentPageState`,
+  default: 1,
+});
