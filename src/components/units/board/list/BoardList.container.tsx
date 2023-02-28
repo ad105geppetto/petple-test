@@ -8,16 +8,21 @@ import {
 import BoardListUI from "./BoardList.presenter";
 import { FETCH_BOARDS_WITH_COUNT } from "./BoardList.querys";
 import { useState, type MouseEvent } from "react";
+import { useRecoilState } from "recoil";
+import { currentPageState } from "../../../../commons/store";
 
 export default function BoardList() {
   const router = useRouter();
+  const [currentPage, setCurrentPage] = useRecoilState(currentPageState);
+
   const { data, refetch } = useQuery<
     Pick<IQuery, "fetchBoards" | "fetchBoardsCount">,
     IQueryFetchBoardsArgs | IQueryFetchBoardsCountArgs
-  >(FETCH_BOARDS_WITH_COUNT, { fetchPolicy: "network-only" });
+  >(FETCH_BOARDS_WITH_COUNT, {
+    variables: { page: currentPage },
+  });
 
   const [startPage, setStartPage] = useState(1);
-  const [currentPage, setCurrentPage] = useState(1);
   const endPage = data ? Math.ceil(data.fetchBoardsCount / 10) : 1;
 
   const onClickMoveToBoardDetail = (id: string) => () => {
