@@ -4,11 +4,12 @@ import {
   type IMutationUpdateBoardArgs,
   type IMutation,
   type IMutationCreateBoardArgs,
-  type IMutationUploadFileArgs,
 } from "../../../../commons/types/generated/types";
 import BoardWriteUI from "./BoardWrite.presenter";
-import { CREATE_BOARD, UPDATE_BOARD, UPLOAD_FILE } from "./BoardWrite.querys";
+import { CREATE_BOARD, UPDATE_BOARD } from "./BoardWrite.querys";
 import { type IBoardWriteProps } from "./BoardWrite.types";
+import axios from "axios";
+import { FETCH_BOARD } from "../detail/BoardDetail.querys";
 
 export default function BoardWrite(props: IBoardWriteProps) {
   const fileRef = useRef<HTMLInputElement[] | null[]>([null, null, null]);
@@ -16,10 +17,6 @@ export default function BoardWrite(props: IBoardWriteProps) {
   const [password, setPassword] = useState("");
   const [title, setTitle] = useState("");
   const [imageUrls, setImageUrls] = useState<string[]>([]);
-  const [uploadFile] = useMutation<
-    Pick<IMutation, "uploadFile">,
-    IMutationUploadFileArgs
-  >(UPLOAD_FILE);
   const [createBoard] = useMutation<
     Pick<IMutation, "createBoard">,
     IMutationCreateBoardArgs
@@ -27,7 +24,14 @@ export default function BoardWrite(props: IBoardWriteProps) {
   const [updateBoard] = useMutation<
     Pick<IMutation, "updateBoard">,
     IMutationUpdateBoardArgs
-  >(UPDATE_BOARD);
+  >(UPDATE_BOARD, {
+    refetchQueries: () => [
+      {
+        query: FETCH_BOARD,
+        variables: { boardId: String(props.router.query.boardId) },
+      },
+    ],
+  });
   const [files, setFiles] = useState<File[]>([]);
 
   const onChangeWriter = (event: ChangeEvent<HTMLInputElement>) => {
@@ -87,7 +91,6 @@ export default function BoardWrite(props: IBoardWriteProps) {
             tempUrls.push(event.target?.result);
             tempFiles.push(file);
           }
-
           setImageUrls(tempUrls);
           setFiles(tempFiles);
         }
@@ -95,32 +98,75 @@ export default function BoardWrite(props: IBoardWriteProps) {
     };
 
   const onClickSubmit = async () => {
-    const resultFiles = await Promise.all(
-      files.map((el) => el && uploadFile({ variables: { file: el } }))
-    );
-    const resultUrls = resultFiles.map((el) =>
-      el.data ? el.data?.uploadFile.url : ""
-    );
+    if (!writer) {
+      alert("작성자를 입력해주세요.");
+      return;
+    }
+    if (!password) {
+      alert("비밀번호를 입력해주세요.");
+      return;
+    }
+    if (!title) {
+      alert("제목을 입력해주세요.");
+      return;
+    }
+    if (!props.contents) {
+      alert("내용을 입력해주세요.");
+      return;
+    }
 
-    const result = await createBoard({
-      variables: {
-        createBoardInput: {
-          writer,
-          password,
-          title,
-          contents: props.contents,
-          images: resultUrls,
+    try {
+      const resultFiles = await Promise.all(
+        files.map((el) => {
+          const formData = new FormData();
+          formData.append("image", el);
+          return axios.post("http://localhost:8080/upload", formData);
+        })
+      );
+      const resultUrls = resultFiles.map((el) =>
+        el.data ? el.data?.uploadFile.url : ""
+      );
+
+      const result = await createBoard({
+        variables: {
+          createBoardInput: {
+            writer,
+            password,
+            title,
+            contents: props.contents,
+            images: resultUrls,
+          },
         },
-      },
-    });
+      });
 
-    void props.router.push(`/boards/${String(result.data?.createBoard._id)}`);
+      void props.router.push(`/boards/${String(result.data?.createBoard._id)}`);
+    } catch (error) {
+      if (error instanceof Error) console.log(error.message);
+    }
   };
 
   const onClickEdit = async () => {
+    const currentFiles = JSON.stringify(imageUrls);
+    const defaultFiles = JSON.stringify(props.data?.fetchBoard.images);
+    const isChangedFiles = currentFiles !== defaultFiles;
+
+    if (!title && !props.contents && !isChangedFiles) {
+      alert("수정한 내용이 없습니다.");
+      return;
+    }
+
+    if (!password) {
+      alert("비밀번호를 확인해주세요.");
+      return;
+    }
+
     try {
       const resultFiles = await Promise.all(
-        files.map((el) => el && uploadFile({ variables: { file: el } }))
+        files.map((el) => {
+          const formData = new FormData();
+          formData.append("image", el);
+          return axios.post("http://localhost:8080/upload", formData);
+        })
       );
       const resultUrls = resultFiles.map((el) =>
         el.data ? el.data?.uploadFile.url : ""
@@ -129,7 +175,7 @@ export default function BoardWrite(props: IBoardWriteProps) {
       const updateBoardInput: any = {};
       if (title) updateBoardInput.title = title;
       if (props.contents) updateBoardInput.contents = props.contents;
-      if (resultUrls.length !== 0) updateBoardInput.images = resultUrls;
+      if (isChangedFiles) updateBoardInput.images = resultUrls;
 
       const result = await updateBoard({
         variables: {
@@ -141,7 +187,7 @@ export default function BoardWrite(props: IBoardWriteProps) {
 
       void props.router.push(`/boards/${String(result.data?.updateBoard._id)}`);
     } catch (error) {
-      if (error instanceof Error) alert(error.message);
+      if (error instanceof Error) console.log(error.message);
     }
   };
   return (
