@@ -197,6 +197,7 @@ export default function BoardWrite(props: IBoardWriteProps) {
       isEdit={props.isEdit}
       data={props.data}
       contents={props.contents}
+      writer={writer}
       onChangeWriter={onChangeWriter}
       onChangePassword={onChangePassword}
       onChangeTitle={onChangeTitle}
