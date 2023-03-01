@@ -18,7 +18,7 @@ const FETCH_USER_LOGGED_IN = gql`
 export default function LayoutHeader() {
   const router = useRouter();
 
-  const { data } =
+  const { data, client } =
     useQuery<Pick<IQuery, "fetchUserLoggedIn">>(FETCH_USER_LOGGED_IN);
 
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
@@ -31,10 +31,11 @@ export default function LayoutHeader() {
     void router.push("/login");
   };
 
-  const onClickMoveToLogout = () => {
+  const onClickMoveToLogout = async () => {
     const result = confirm("로그아웃 하시겠습니까?");
     if (result) {
       localStorage.removeItem("accessToken");
+      await client.clearStore();
       setAccessToken("");
     }
   };
