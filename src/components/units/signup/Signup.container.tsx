@@ -110,6 +110,22 @@ export default function Signup(props: ISignupProps) {
         },
       });
 
+      const result = await loginUser({
+        variables: {
+          email,
+          password,
+        },
+      });
+      const accessToken = result.data?.loginUser.accessToken;
+
+      if (!accessToken) {
+        alert("로그인에 실패하였습니다.");
+        return;
+      }
+
+      localStorage.setItem("accessToken", accessToken);
+      setAccessToken(accessToken);
+
       void router.replace("/boards");
     } catch (error) {
       if (error instanceof Error) alert(error.message);
