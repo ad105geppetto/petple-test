@@ -1,4 +1,5 @@
 import { getDate } from "../../../../commons/utils/utils";
+import ErrorModal from "../../../commons/modal/error";
 import CommentWrite from "../write/CommentWrite.container";
 import * as S from "./CommentList.styles";
 import { type ICommentListUIProps } from "./CommentList.types";
@@ -6,6 +7,7 @@ import { type ICommentListUIProps } from "./CommentList.types";
 export default function CommentListUI(props: ICommentListUIProps) {
   return (
     <>
+      {props.isOpen ? <ErrorModal onCancel={props.onCancel} /> : ""}
       {props.data?.fetchBoardComments.map((comment) => (
         <S.Wrapper key={comment._id}>
           {props.editCommentId === comment._id ? (

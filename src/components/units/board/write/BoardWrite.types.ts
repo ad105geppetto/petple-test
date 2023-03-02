@@ -17,6 +17,8 @@ export interface IBoardWriteUIProps {
   data: Pick<IQuery, "fetchBoard"> | undefined;
   contents: string;
   writer: string;
+  isOpen: boolean;
+  onCancel: () => void;
   onChangeWriter: (event: ChangeEvent<HTMLInputElement>) => void;
   onChangePassword: (event: ChangeEvent<HTMLInputElement>) => void;
   onChangeTitle: (event: ChangeEvent<HTMLInputElement>) => void;

@@ -1,9 +1,11 @@
 import * as S from "./Signup.styles";
 import { type ISignupUIProps } from "./Signup.types";
+import ErrorModal from "../../commons/modal/error";
 
 export default function SignupUI(props: ISignupUIProps) {
   return (
     <S.Wrapper>
+      {props.isOpen ? <ErrorModal onCancel={props.onClickCancel} /> : ""}
       <S.Title>펫플 {props.isSignup ? "회원가입" : "로그인"}</S.Title>
       <S.Group>
         <S.H3>

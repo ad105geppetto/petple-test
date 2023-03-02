@@ -3,7 +3,9 @@ import { useRouter } from "next/router";
 import { useRecoilState } from "recoil";
 import { accessTokenState } from "../../../../commons/store";
 import { type IQuery } from "../../../../commons/types/generated/types";
+import LogoutModal from "../../modal/logout";
 import * as S from "./header.styles";
+import { useState } from "react";
 
 const FETCH_USER_LOGGED_IN = gql`
   query fetchUserLoggedIn {
@@ -17,6 +19,7 @@ const FETCH_USER_LOGGED_IN = gql`
 
 export default function LayoutHeader() {
   const router = useRouter();
+  const [isOpen, setIsOpen] = useState(false);
 
   const { data, client } =
     useQuery<Pick<IQuery, "fetchUserLoggedIn">>(FETCH_USER_LOGGED_IN);
@@ -32,16 +35,27 @@ export default function LayoutHeader() {
   };
 
   const onClickMoveToLogout = async () => {
-    const result = confirm("로그아웃 하시겠습니까?");
-    if (result) {
-      localStorage.removeItem("accessToken");
-      await client.clearStore();
-      setAccessToken("");
-    }
+    setIsOpen(true);
+  };
+
+  const onClickLogout = async () => {
+    setIsOpen(false);
+    localStorage.removeItem("accessToken");
+    await client.clearStore();
+    setAccessToken("");
+  };
+
+  const onClickCancel = () => {
+    setIsOpen(false);
   };
 
   return (
     <S.Container>
+      {isOpen ? (
+        <LogoutModal onLogout={onClickLogout} onCancle={onClickCancel} />
+      ) : (
+        ""
+      )}
       <S.Wapper>
         <S.LogoWapper>PETPLE</S.LogoWapper>
         <S.SearchWapper>

@@ -2,10 +2,12 @@ import * as S from "./CommentWrite.styles";
 import { CommentOutlined } from "@ant-design/icons";
 import { Space } from "antd";
 import { type ICommentWriteUIProps } from "./CommentWrite.types";
+import ErrorModal from "../../../commons/modal/error";
 
 export default function CommentWriteUI(props: ICommentWriteUIProps) {
   return (
     <>
+      {props.isOpen ? <ErrorModal onCancel={props.onCancel} /> : ""}
       {props.isEdit ? (
         ""
       ) : (

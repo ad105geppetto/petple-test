@@ -2,6 +2,7 @@ import * as S from "./BoardWrite.styles";
 import dynamic from "next/dynamic";
 import "react-quill/dist/quill.snow.css";
 import { type IBoardWriteUIProps } from "./BoardWrite.types";
+import ErrorModal from "../../../commons/modal/error";
 
 const ReactQuill = dynamic(async () => await import("react-quill"), {
   ssr: false,
@@ -11,6 +12,7 @@ const ReactQuill = dynamic(async () => await import("react-quill"), {
 export default function BoardWriteUI(props: IBoardWriteUIProps) {
   return (
     <>
+      {props.isOpen ? <ErrorModal onCancel={props.onCancel} /> : ""}
       <S.H2>게시물 {props.isEdit ? "수정" : "등록"}</S.H2>
       <S.TitleWrapperWithNonMember>
         <S.TitleWrapper>

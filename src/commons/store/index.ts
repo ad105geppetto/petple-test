@@ -10,3 +10,8 @@ export const currentPageState = atom({
   key: `currentPageState`,
   default: 1,
 });
+
+export const modalMessageState = atom({
+  key: `modalMessageState/${uuidv4()}`,
+  default: "",
+});
