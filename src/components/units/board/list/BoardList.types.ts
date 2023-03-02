@@ -16,6 +16,7 @@ export interface IBoardListProps {
   startPage: number;
   currentPage: number;
   endPage: number;
+  pages: number;
   onClickMoveToBoardDetail: (id: string) => () => void;
   onClickMoveToBoardNew: () => void;
   onClickFirstPage: () => void;

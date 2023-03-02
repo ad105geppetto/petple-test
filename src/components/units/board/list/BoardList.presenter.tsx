@@ -36,7 +36,7 @@ export default function BoardListUI(props: IBoardListProps) {
             {"<<"}
           </S.PageMoveButton>
           <S.PageMoveButton onClick={props.onClickPrev}>{"<"}</S.PageMoveButton>
-          {Array(10)
+          {Array(props.pages)
             .fill(props.startPage)
             .filter((_, idx) => idx + props.startPage <= props.endPage)
             .map((_, idx) => (

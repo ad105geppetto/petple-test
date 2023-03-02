@@ -7,12 +7,13 @@ import {
 } from "../../../../commons/types/generated/types";
 import BoardListUI from "./BoardList.presenter";
 import { FETCH_BOARDS_WITH_COUNT } from "./BoardList.querys";
-import { useState, type MouseEvent } from "react";
+import { useEffect, useState, type MouseEvent } from "react";
 import { useRecoilState } from "recoil";
 import { currentPageState } from "../../../../commons/store";
 
 export default function BoardList() {
   const router = useRouter();
+  const [pages, setPages] = useState(10);
   const [currentPage, setCurrentPage] = useRecoilState(currentPageState);
 
   const { data, refetch } = useQuery<
@@ -24,6 +25,13 @@ export default function BoardList() {
 
   const [startPage, setStartPage] = useState(1);
   const endPage = data ? Math.ceil(data.fetchBoardsCount / 10) : 1;
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (window.innerWidth < 767) {
+      setPages(5);
+    }
+  }, [setPages]);
 
   const onClickMoveToBoardDetail = (id: string) => () => {
     void router.push(`boards/${id}`);
@@ -39,9 +47,11 @@ export default function BoardList() {
     void refetch({ page: 1 });
   };
   const onClickLastPage = () => {
-    if (startPage + 10 <= endPage) {
+    if (startPage + pages <= endPage) {
       setStartPage(
-        endPage % 10 === 0 ? endPage - 9 : endPage - (endPage % 10) + 1
+        endPage % pages === 0
+          ? endPage - (pages - 1)
+          : endPage - (endPage % pages) + 1
       );
       setCurrentPage(endPage);
       void refetch({ page: endPage });
@@ -49,15 +59,15 @@ export default function BoardList() {
   };
   const onClickPrev = () => {
     if (startPage === 1) return;
-    setStartPage((prev) => prev - 10);
-    setCurrentPage(startPage - 10);
-    void refetch({ page: startPage - 10 });
+    setStartPage((prev) => prev - pages);
+    setCurrentPage(startPage - pages);
+    void refetch({ page: startPage - pages });
   };
   const onClickNext = () => {
     if (startPage + 10 <= endPage) {
-      setStartPage((prev) => prev + 10);
-      setCurrentPage(startPage + 10);
-      void refetch({ page: startPage + 10 });
+      setStartPage((prev) => prev + pages);
+      setCurrentPage(startPage + pages);
+      void refetch({ page: startPage + pages });
     }
   };
   const onClickButton = (event: MouseEvent<HTMLDivElement>) => {
@@ -72,6 +82,7 @@ export default function BoardList() {
       startPage={startPage}
       currentPage={currentPage}
       endPage={endPage}
+      pages={pages}
       onClickMoveToBoardDetail={onClickMoveToBoardDetail}
       onClickMoveToBoardNew={onClickMoveToBoardNew}
       onClickFirstPage={onClickFirstPage}
