@@ -1,6 +1,7 @@
 import { useMutation } from "@apollo/client";
-import { useRouter } from "next/router";
 import { useState, type ChangeEvent } from "react";
+import { useSetRecoilState } from "recoil";
+import { modalMessageState } from "../../../commons/store";
 import {
   type IMutation,
   type IMutationResetUserPasswordArgs,
@@ -9,9 +10,12 @@ import MypageUI from "./Mypage.presenter";
 import { RESET_USER_PASSWORD } from "./Mypage.query";
 
 export default function Mypage() {
-  const router = useRouter();
   const [newPassword, setNewPassword] = useState("");
   const [newPasswordCheck, setNewPasswordCheck] = useState("");
+  const [isOpenError, setIsOpenError] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const setModalMessage = useSetRecoilState(modalMessageState);
 
   const [resetUserPassword] = useMutation<
     Pick<IMutation, "resetUserPassword">,
@@ -29,7 +33,8 @@ export default function Mypage() {
   const onClickSubmit = async () => {
     try {
       if (newPassword !== newPasswordCheck) {
-        alert("비밀번호가 동일하지 않습니다.");
+        setIsOpenError(true);
+        setModalMessage("비밀번호가 동일하지 않습니다.");
         return;
       }
 
@@ -37,19 +42,32 @@ export default function Mypage() {
         variables: { password: newPassword },
       });
 
-      alert("비밀번호가 변경되었습니다.");
-
-      router.back();
+      setIsOpen(true);
     } catch (error) {
-      if (error instanceof Error) console.log(error.message);
+      if (error instanceof Error) {
+        setIsOpenError(true);
+        setModalMessage("잘못된 요청입니다.");
+      }
     }
+  };
+
+  const onCancelError = () => {
+    setIsOpenError(false);
+  };
+
+  const onCancel = () => {
+    setIsOpen(false);
   };
 
   return (
     <MypageUI
+      isOpen={isOpen}
+      isOpenError={isOpenError}
       onChangeNewPassword={onChangeNewPassword}
       onChangeNewPasswordCheck={onChangeNewPasswordCheck}
       onClickSubmit={onClickSubmit}
+      onCancel={onCancel}
+      onCancelError={onCancelError}
     />
   );
 }

@@ -5,6 +5,8 @@ export interface ICommentListUIProps {
   data: Pick<IQuery, "fetchBoardComments"> | undefined;
   editCommentId: string;
   isEdit: boolean;
+  isOpen: boolean;
+  onCancel: () => void;
   setIsEdit: Dispatch<SetStateAction<boolean>>;
   setEditCommentId: Dispatch<SetStateAction<string>>;
   onClickEdit: (boardCommentId: string) => () => void;

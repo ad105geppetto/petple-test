@@ -12,9 +12,17 @@ import {
 } from "./CommentList.querys";
 import { useState } from "react";
 import CommentListUI from "./CommentList.presenter";
+import { modalMessageState } from "../../../../commons/store";
+import { useSetRecoilState } from "recoil";
 
 export default function CommentList() {
   const router = useRouter();
+  const [isEdit, setIsEdit] = useState(false);
+  const [editCommentId, setEditCommentId] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+
+  const setModalMessage = useSetRecoilState(modalMessageState);
+
   const { data } = useQuery<
     Pick<IQuery, "fetchBoardComments">,
     IQueryFetchBoardCommentsArgs
@@ -32,8 +40,6 @@ export default function CommentList() {
       },
     ],
   });
-  const [isEdit, setIsEdit] = useState(false);
-  const [editCommentId, setEditCommentId] = useState("");
 
   const onClickEdit = (boardCommentId: string) => () => {
     setEditCommentId(boardCommentId);
@@ -47,8 +53,15 @@ export default function CommentList() {
         variables: { password, boardCommentId },
       });
     } catch (error) {
-      if (error instanceof Error) alert(error.message);
+      if (error instanceof Error) {
+        setIsOpen(true);
+        setModalMessage("잘못된 요청입니다.");
+      }
     }
+  };
+
+  const onCancel = () => {
+    setIsOpen(false);
   };
 
   return (
@@ -56,6 +69,8 @@ export default function CommentList() {
       data={data}
       editCommentId={editCommentId}
       isEdit={isEdit}
+      isOpen={isOpen}
+      onCancel={onCancel}
       setIsEdit={setIsEdit}
       setEditCommentId={setEditCommentId}
       onClickEdit={onClickEdit}

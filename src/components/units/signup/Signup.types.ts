@@ -13,6 +13,8 @@ export interface ISignupUIProps {
   onClickSignup: () => void;
   isSignup: boolean;
   onClickLogin: () => void;
+  isOpen: boolean;
+  onClickCancel: () => void;
 }
 
 export interface ISignupProps {

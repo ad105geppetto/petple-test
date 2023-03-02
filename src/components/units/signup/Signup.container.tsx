@@ -2,7 +2,7 @@ import { useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
 import { type ChangeEvent, useState } from "react";
 import { useSetRecoilState } from "recoil";
-import { accessTokenState } from "../../../commons/store";
+import { accessTokenState, modalMessageState } from "../../../commons/store";
 import {
   type IMutationLoginUserArgs,
   type IMutation,
@@ -15,7 +15,9 @@ import { type ISignupProps } from "./Signup.types";
 export default function Signup(props: ISignupProps) {
   const router = useRouter();
   const setAccessToken = useSetRecoilState(accessTokenState);
+  const setModalMessage = useSetRecoilState(modalMessageState);
 
+  const [isOpen, setIsOpen] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -86,7 +88,8 @@ export default function Signup(props: ISignupProps) {
       if (!password) setPasswordError(true);
       if (!passwordCheck) setPasswordCheckError(true);
 
-      alert("필수 정보를 입력해주세요.");
+      setIsOpen(true);
+      setModalMessage("필수 정보를 입력해주세요.");
       return;
     }
 
@@ -94,12 +97,14 @@ export default function Signup(props: ISignupProps) {
     const regex = /[0-9a-zA-Z]+\@[0-9a-zA-Z]+\.[a-zA-Z]+/g;
 
     if (!regex.test(email)) {
-      alert("이메일을 입력해주세요.");
+      setIsOpen(true);
+      setModalMessage("이메일을 입력해주세요.");
       return;
     }
 
     if (password !== passwordCheck) {
-      alert("비밀번호가 일치하지 않습니다.");
+      setIsOpen(true);
+      setModalMessage("비밀번호가 일치하지 않습니다.");
       return;
     }
 
@@ -110,9 +115,32 @@ export default function Signup(props: ISignupProps) {
         },
       });
 
+      const result = await loginUser({
+        variables: {
+          email,
+          password,
+        },
+      });
+      const accessToken = result.data?.loginUser.accessToken;
+
+      if (!accessToken) {
+        setIsOpen(true);
+        setModalMessage("로그인에 실패하였습니다.");
+        return;
+      }
+
+      localStorage.setItem("accessToken", accessToken);
+      setAccessToken(accessToken);
+
       void router.replace("/boards");
     } catch (error) {
-      if (error instanceof Error) alert(error.message);
+      if (error instanceof Error) {
+        console.log(error.name);
+        console.log(error.stack);
+        console.log(error.message);
+        setIsOpen(true);
+        setModalMessage("이미 존재하는 회원입니다.");
+      }
     }
   };
 
@@ -121,7 +149,8 @@ export default function Signup(props: ISignupProps) {
       if (!email) setEmailError(true);
       if (!password) setPasswordError(true);
 
-      alert("필수 정보를 입력해주세요.");
+      setIsOpen(true);
+      setModalMessage("필수 정보를 입력해주세요.");
       return;
     }
 
@@ -129,7 +158,8 @@ export default function Signup(props: ISignupProps) {
     const regex = /[0-9a-zA-Z]+\@[0-9a-zA-Z]+\.[a-zA-Z]+/g;
 
     if (!regex.test(email)) {
-      alert("이메일을 입력해주세요.");
+      setIsOpen(true);
+      setModalMessage("이메일을 입력해주세요.");
       return;
     }
 
@@ -143,7 +173,8 @@ export default function Signup(props: ISignupProps) {
       const accessToken = result.data?.loginUser.accessToken;
 
       if (!accessToken) {
-        alert("로그인에 실패하였습니다.");
+        setIsOpen(true);
+        setModalMessage("로그인에 실패하였습니다.");
         return;
       }
 
@@ -152,8 +183,15 @@ export default function Signup(props: ISignupProps) {
 
       void router.replace("/boards");
     } catch (error) {
-      if (error instanceof Error) alert(error.message);
+      if (error instanceof Error) {
+        setIsOpen(true);
+        setModalMessage("잘못된 요청입니다.");
+      }
     }
+  };
+
+  const onClickCancel = () => {
+    setIsOpen(false);
   };
 
   return (
@@ -170,6 +208,8 @@ export default function Signup(props: ISignupProps) {
       onClickSignup={onClickSignup}
       isSignup={props.isSignup}
       onClickLogin={onClickLogin}
+      isOpen={isOpen}
+      onClickCancel={onClickCancel}
     />
   );
 }

@@ -13,12 +13,17 @@ import {
 } from "./CommentWrite.querys";
 import CommentWriteUI from "./CommentWrite.presenter";
 import { type ICommentWriteProps } from "./CommentWrite.types";
+import { modalMessageState } from "../../../../commons/store";
+import { useSetRecoilState } from "recoil";
 
 export default function CommentWrite(props: ICommentWriteProps) {
   const router = useRouter();
   const [writer, setWriter] = useState("");
   const [password, setPassword] = useState("");
   const [contents, setContents] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+
+  const setModalMessage = useSetRecoilState(modalMessageState);
 
   const [createBoardComment] = useMutation<
     Pick<IMutation, "createBoardComment">,
@@ -59,15 +64,18 @@ export default function CommentWrite(props: ICommentWriteProps) {
 
   const onClickSubmit = async () => {
     if (!writer) {
-      alert("댓글 작성자를 입력해주세요.");
+      setIsOpen(true);
+      setModalMessage("댓글 작성자를 입력해주세요.");
       return;
     }
     if (!password) {
-      alert("댓글 비밀번호를 입력해주세요.");
+      setIsOpen(true);
+      setModalMessage("댓글 비밀번호를 입력해주세요.");
       return;
     }
     if (!contents) {
-      alert("댓글을 입력해주세요.");
+      setIsOpen(true);
+      setModalMessage("댓글을 입력해주세요.");
       return;
     }
 
@@ -90,11 +98,13 @@ export default function CommentWrite(props: ICommentWriteProps) {
 
   const onClickUpdate = async () => {
     if (!password) {
-      alert("댓글 비밀번호를 입력해주세요.");
+      setIsOpen(true);
+      setModalMessage("댓글 비밀번호를 입력해주세요.");
       return;
     }
     if (!contents) {
-      alert("댓글을 입력해주세요.");
+      setIsOpen(true);
+      setModalMessage("댓글을 입력해주세요.");
       return;
     }
 
@@ -115,6 +125,10 @@ export default function CommentWrite(props: ICommentWriteProps) {
     setContents("");
   };
 
+  const onCancel = () => {
+    setIsOpen(false);
+  };
+
   return (
     <CommentWriteUI
       writer={writer}
@@ -122,6 +136,8 @@ export default function CommentWrite(props: ICommentWriteProps) {
       contents={contents}
       isEdit={props.isEdit}
       editWriter={props.editWriter}
+      isOpen={isOpen}
+      onCancel={onCancel}
       onChangeWriter={onChangeWriter}
       onChangePassword={onChangePassword}
       onChangeContents={onChangeContents}

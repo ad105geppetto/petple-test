@@ -1,9 +1,13 @@
+import ErrorModal from "../../commons/modal/error";
+import NewPasswordModal from "../../commons/modal/newPassword";
 import * as S from "./Mypage.styles";
 import { type IMypageUIProps } from "./Mypage.types";
 
 export default function MypageUI(props: IMypageUIProps) {
   return (
     <>
+      {props.isOpenError ? <ErrorModal onCancel={props.onCancelError} /> : ""}
+      {props.isOpen ? <NewPasswordModal onCancel={props.onCancel} /> : ""}
       <S.Title>개인정보 {">"} 비밀번호 변경</S.Title>
       <S.InputWrapper>
         새 비밀번호

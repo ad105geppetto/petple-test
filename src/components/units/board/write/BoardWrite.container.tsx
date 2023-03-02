@@ -10,6 +10,8 @@ import { CREATE_BOARD, UPDATE_BOARD } from "./BoardWrite.querys";
 import { type IBoardWriteProps } from "./BoardWrite.types";
 import axios from "axios";
 import { FETCH_BOARD } from "../detail/BoardDetail.querys";
+import { modalMessageState } from "../../../../commons/store";
+import { useSetRecoilState } from "recoil";
 
 export default function BoardWrite(props: IBoardWriteProps) {
   const fileRef = useRef<HTMLInputElement[] | null[]>([null, null, null]);
@@ -17,6 +19,11 @@ export default function BoardWrite(props: IBoardWriteProps) {
   const [password, setPassword] = useState("");
   const [title, setTitle] = useState("");
   const [imageUrls, setImageUrls] = useState<string[]>([]);
+  const [files, setFiles] = useState<File[]>([]);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const setModalMessage = useSetRecoilState(modalMessageState);
+
   const [createBoard] = useMutation<
     Pick<IMutation, "createBoard">,
     IMutationCreateBoardArgs
@@ -32,7 +39,6 @@ export default function BoardWrite(props: IBoardWriteProps) {
       },
     ],
   });
-  const [files, setFiles] = useState<File[]>([]);
 
   const onChangeWriter = (event: ChangeEvent<HTMLInputElement>) => {
     setWriter(event.target.value);
@@ -59,12 +65,14 @@ export default function BoardWrite(props: IBoardWriteProps) {
       const file = event.target.files?.[0];
 
       if (!file?.size) {
-        alert("파일이 없습니다.");
+        setIsOpen(true);
+        setModalMessage("파일이 없습니다.");
         return;
       }
 
       if (file.size > 5 * 1024 * 1024) {
-        alert("파일 용량이 너무 큽니다.(제한: 5MB)");
+        setIsOpen(true);
+        setModalMessage("파일 용량이 너무 큽니다.(제한: 5MB)");
         return;
       }
 
@@ -73,7 +81,8 @@ export default function BoardWrite(props: IBoardWriteProps) {
         !file.type.includes("jpg") &&
         !file.type.includes("png")
       ) {
-        alert("이미지 파일 확장자는 png 또는 jpg, jpeg 여야 합니다.");
+        setIsOpen(true);
+        setModalMessage("이미지 파일 확장자는 png 또는 jpg, jpeg 여야 합니다.");
         return;
       }
 
@@ -99,19 +108,23 @@ export default function BoardWrite(props: IBoardWriteProps) {
 
   const onClickSubmit = async () => {
     if (!writer) {
-      alert("작성자를 입력해주세요.");
+      setIsOpen(true);
+      setModalMessage("작성자를 입력해주세요.");
       return;
     }
     if (!password) {
-      alert("비밀번호를 입력해주세요.");
+      setIsOpen(true);
+      setModalMessage("비밀번호를 입력해주세요.");
       return;
     }
     if (!title) {
-      alert("제목을 입력해주세요.");
+      setIsOpen(true);
+      setModalMessage("제목을 입력해주세요.");
       return;
     }
     if (!props.contents) {
-      alert("내용을 입력해주세요.");
+      setIsOpen(true);
+      setModalMessage("내용을 입력해주세요.");
       return;
     }
 
@@ -141,7 +154,10 @@ export default function BoardWrite(props: IBoardWriteProps) {
 
       void props.router.push(`/boards/${String(result.data?.createBoard._id)}`);
     } catch (error) {
-      if (error instanceof Error) console.log(error.message);
+      if (error instanceof Error) {
+        setIsOpen(true);
+        setModalMessage("잘못된 요청입니다.");
+      }
     }
   };
 
@@ -151,12 +167,14 @@ export default function BoardWrite(props: IBoardWriteProps) {
     const isChangedFiles = currentFiles !== defaultFiles;
 
     if (!title && !props.contents && !isChangedFiles) {
-      alert("수정한 내용이 없습니다.");
+      setIsOpen(true);
+      setModalMessage("수정한 내용이 없습니다.");
       return;
     }
 
     if (!password) {
-      alert("비밀번호를 확인해주세요.");
+      setIsOpen(true);
+      setModalMessage("비밀번호를 확인해주세요.");
       return;
     }
 
@@ -187,9 +205,17 @@ export default function BoardWrite(props: IBoardWriteProps) {
 
       void props.router.push(`/boards/${String(result.data?.updateBoard._id)}`);
     } catch (error) {
-      if (error instanceof Error) console.log(error.message);
+      if (error instanceof Error) {
+        setIsOpen(true);
+        setModalMessage("잘못된 요청입니다.");
+      }
     }
   };
+
+  const onCancel = () => {
+    setIsOpen(false);
+  };
+
   return (
     <BoardWriteUI
       imageUrls={imageUrls}
@@ -198,6 +224,8 @@ export default function BoardWrite(props: IBoardWriteProps) {
       data={props.data}
       contents={props.contents}
       writer={writer}
+      isOpen={isOpen}
+      onCancel={onCancel}
       onChangeWriter={onChangeWriter}
       onChangePassword={onChangePassword}
       onChangeTitle={onChangeTitle}
