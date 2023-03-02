@@ -5,6 +5,11 @@ export const H2 = styled.h2`
   font-size: 36px;
   margin-top: 60px;
   margin-bottom: 60px;
+
+  @media screen and (max-width: 767px) {
+    font-size: 26px;
+    margin: 30px 0px;
+  }
 `;
 
 export const TitleWrapperWithNonMember = styled.div`
@@ -23,6 +28,7 @@ export const TitleInputWithNonMember = styled.input`
 
   @media screen and (max-width: 767px) {
     width: 100%;
+    padding: 8.5px 15px;
   }
   @media screen and (min-width: 768px) and (max-width: 1023px) {
     width: 372px;
@@ -31,6 +37,10 @@ export const TitleInputWithNonMember = styled.input`
 
 export const TitleWrapper = styled.div`
   margin-bottom: 16px;
+
+  @media screen and (max-width: 767px) {
+    margin: 0px 30px 16px 30px;
+  }
 `;
 
 export const H4 = styled.h4`
@@ -42,20 +52,42 @@ export const H4 = styled.h4`
 export const TitleInput = styled.input`
   width: 100%;
   padding: 12.5px 15px;
+
+  @media screen and (max-width: 767px) {
+    padding: 8.5px 15px;
+  }
 `;
 
 export const ContentsWrapper = styled.div`
-  margin-bottom: 60px;
+  padding-bottom: 60px;
+
+  @media screen and (max-width: 767px) {
+    margin: 0px 30px 50px 30px;
+  }
+`;
+
+export const ImageWrapper = styled.div`
+  margin-bottom: 77px;
+  @media screen and (max-width: 767px) {
+    margin: 0px 30px 50px 30px;
+  }
 `;
 
 export const ImageUploadGroup = styled.div`
   display: flex;
   flex-direction: row;
-  margin-bottom: 77px;
+
+  @media screen and (max-width: 767px) {
+    justify-content: space-between;
+  }
 `;
 
 export const ImageUploadWrapper = styled.div`
   margin-right: 20px;
+
+  @media screen and (max-width: 767px) {
+    margin-right: 0;
+  }
 `;
 
 export const ImageUpload = styled.div`

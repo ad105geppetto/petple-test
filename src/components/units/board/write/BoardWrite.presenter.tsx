@@ -51,33 +51,35 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
           value={props.contents}
         />
       </S.ContentsWrapper>
-      <S.H4>사진 첨부</S.H4>
-      <S.ImageUploadGroup>
-        {new Array(3).fill("").map((_, index) => (
-          <S.ImageUploadWrapper key={index}>
-            {props.imageUrls[index] ? (
-              <S.Image
-                src={props.imageUrls[index]}
-                alt=""
-                onClick={props.onClickImage(index)}
+      <S.ImageWrapper>
+        <S.H4>사진 첨부</S.H4>
+        <S.ImageUploadGroup>
+          {new Array(3).fill("").map((_, index) => (
+            <S.ImageUploadWrapper key={index}>
+              {props.imageUrls[index] ? (
+                <S.Image
+                  src={props.imageUrls[index]}
+                  alt=""
+                  onClick={props.onClickImage(index)}
+                />
+              ) : (
+                <S.ImageUpload onClick={props.onClickImage(index)}>
+                  <S.TextPlus>+</S.TextPlus>
+                  <S.TextUpload>Upload</S.TextUpload>
+                </S.ImageUpload>
+              )}
+              <S.ImageInput
+                onChange={props.onChangeUploadFile(index)}
+                type="file"
+                ref={(element) => {
+                  props.fileRef.current[index] = element;
+                }}
+                accept={"image/jpeg, image/jpg, image/png"}
               />
-            ) : (
-              <S.ImageUpload onClick={props.onClickImage(index)}>
-                <S.TextPlus>+</S.TextPlus>
-                <S.TextUpload>Upload</S.TextUpload>
-              </S.ImageUpload>
-            )}
-            <S.ImageInput
-              onChange={props.onChangeUploadFile(index)}
-              type="file"
-              ref={(element) => {
-                props.fileRef.current[index] = element;
-              }}
-              accept={"image/jpeg, image/jpg, image/png"}
-            />
-          </S.ImageUploadWrapper>
-        ))}
-      </S.ImageUploadGroup>
+            </S.ImageUploadWrapper>
+          ))}
+        </S.ImageUploadGroup>
+      </S.ImageWrapper>
       <S.RegisterWrapper>
         <S.Register
           onClick={props.isEdit ? props.onClickEdit : props.onClickSubmit}
