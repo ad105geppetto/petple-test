@@ -45,6 +45,10 @@ export const ProfileWrapper = styled.div`
   padding: 20px 0;
   margin-bottom: 32px;
   border-bottom: 1px solid #999;
+
+  @media screen and (max-width: 767px) {
+    margin: 0px 30px;
+  }
 `;
 
 export const Profile = styled.img`
@@ -68,11 +72,19 @@ export const Date = styled.div`
 export const BoardTitle = styled.h1`
   margin-bottom: 16px;
   font-size: 20px;
+
+  @media screen and (max-width: 767px) {
+    margin: 0px 30px 16px 30px;
+  }
 `;
 
 export const BoardContents = styled.div`
   padding-bottom: 20px;
   border-bottom: 1px solid #999;
+
+  @media screen and (max-width: 767px) {
+    margin: 0px 30px;
+  }
 `;
 
 export const ButtonItemWrapper = styled.div`
@@ -103,5 +115,10 @@ export const ButtonItem = styled.div`
     color: #ffffff;
     border: 1px solid #000000;
     transition: background-color 0.3s ease-in-out;
+  }
+
+  @media screen and (max-width: 767px) {
+    width: 120px;
+    height: 40px;
   }
 `;
