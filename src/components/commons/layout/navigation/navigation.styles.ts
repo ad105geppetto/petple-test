@@ -42,7 +42,7 @@ export const HamburgerMenu = styled.div`
   justify-content: space-around;
   width: 30px;
   height: 24px;
-  margin-left: 80px;
+  margin-left: 20px;
   border: none;
   background-color: transparent;
   &:focus {
@@ -54,12 +54,6 @@ export const HamburgerMenu = styled.div`
     height: 2px;
     background-color: #ffffff;
   }
-`;
-
-export const CategoryTitle = styled.div`
-  margin-right: 50px;
-  font-weight: 700;
-  color: #ffffff;
 `;
 
 export const DropdownMenu = styled.div`

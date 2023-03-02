@@ -2,6 +2,10 @@ import styled from "@emotion/styled";
 
 export const Wapper = styled.div`
   height: calc(100vh - 173px);
+
+  @media screen and (max-width: 767px) {
+    height: 350px;
+  }
 `;
 
 export const SliderItem = styled.div`
@@ -11,6 +15,10 @@ export const SliderItem = styled.div`
 export const SliderImage = styled.img`
   width: 100%;
   height: calc(100vh - 173px);
+
+  @media screen and (max-width: 767px) {
+    height: 350px;
+  }
 `;
 
 export const SliderTitle = styled.h1`
@@ -21,7 +29,9 @@ export const SliderTitle = styled.h1`
 
   @media screen and (max-width: 767px) {
     margin-top: 122px;
-    font-size: 42px;
+    font-size: 32px;
+    color: #f2f2f5;
+    text-shadow: #000000 1px 0 3px;
   }
   @media screen and (min-width: 768px) and (max-width: 1023px) {
     margin-top: 142px;
@@ -36,8 +46,9 @@ export const SliderText = styled.h3`
   font-size: 30px;
 
   @media screen and (max-width: 767px) {
-    margin-top: 248px;
+    margin-top: 228px;
     font-size: 18px;
+    text-shadow: #f2f2f5 1px 0 1px;
   }
   @media screen and (min-width: 768px) and (max-width: 1023px) {
     margin-top: 328px;

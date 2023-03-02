@@ -29,7 +29,6 @@ export default function LayoutNavigation() {
             <span></span>
             <span></span>
           </S.HamburgerMenu>
-          <S.CategoryTitle>메뉴</S.CategoryTitle>
         </S.HamburgerMenuWrapper>
         <S.DropdownMenu>
           {NAVIGATION_MANUS.map((menu, index) => (
