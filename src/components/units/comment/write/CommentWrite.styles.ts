@@ -16,13 +16,17 @@ export const H5 = styled.h5`
   padding-left: 10px;
 `;
 
+interface IProps {
+  isEdit: boolean;
+}
+
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
 
   @media screen and (max-width: 767px) {
     flex-direction: column;
-    padding: 0px 30px 0px 30px;
+    padding: ${(props: IProps) => (props.isEdit ? "0" : "0px 30px 0px 30px")};
   }
 `;
 
@@ -48,7 +52,7 @@ export const CommentWrapper = styled.div`
   position: relative;
 
   @media screen and (max-width: 767px) {
-    padding: 0px 30px 0px 30px;
+    padding: ${(props: IProps) => (props.isEdit ? "0" : "0px 30px 0px 30px")};
   }
 `;
 
@@ -67,7 +71,7 @@ export const CommentLimit = styled.div`
   left: 21px;
 
   @media screen and (max-width: 767px) {
-    left: 51px;
+    left: ${(props: IProps) => (props.isEdit ? "21px" : "51px")};
   }
 `;
 
@@ -88,6 +92,6 @@ export const SubmitButton = styled.button`
   }
 
   @media screen and (max-width: 767px) {
-    right: 30px;
+    right: ${(props: IProps) => (props.isEdit ? "0px" : "30px")};
   }
 `;

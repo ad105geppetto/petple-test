@@ -4,10 +4,14 @@ import { Space } from "antd";
 
 export const Wrapper = styled.div`
   margin: 0px;
+  @media screen and (max-width: 767px) {
+    margin: 0px 30px 0px 30px;
+  }
 `;
 
 export const CommentWriteWrapper = styled.div`
   margin-top: 40px;
+  padding: 0;
 `;
 
 export const ProfileWrapper = styled.div`
