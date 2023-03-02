@@ -18,7 +18,7 @@ export default function CommentWriteUI(props: ICommentWriteUIProps) {
           <S.H5>댓글</S.H5>
         </S.TitleWrapper>
       )}
-      <S.Wrapper>
+      <S.Wrapper isEdit={props.isEdit}>
         <>
           <S.Label htmlFor="writer">작성자</S.Label>
           <S.UserInput
@@ -41,15 +41,18 @@ export default function CommentWriteUI(props: ICommentWriteUIProps) {
           />
         </>
       </S.Wrapper>
-      <S.CommentWrapper>
+      <S.CommentWrapper isEdit={props.isEdit}>
         <S.CommentInput
           type="text"
           onChange={props.onChangeContents}
           value={props.contents}
           autoComplete="off"
         />
-        <S.CommentLimit>{props.contents.length} / 100</S.CommentLimit>
+        <S.CommentLimit isEdit={props.isEdit}>
+          {props.contents.length} / 100
+        </S.CommentLimit>
         <S.SubmitButton
+          isEdit={props.isEdit}
           onClick={props.isEdit ? props.onClickUpdate : props.onClickSubmit}
         >
           댓글 {props.isEdit ? "수정" : "작성"}

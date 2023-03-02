@@ -13,9 +13,11 @@ export const Wapper = styled.div`
 
   @media screen and (max-width: 767px) {
     width: 100%;
+    margin: 0px 30px;
   }
   @media screen and (min-width: 768px) and (max-width: 1023px) {
     width: 767px;
+    margin: 0px 30px;
   }
 `;
 
@@ -28,6 +30,7 @@ export const Title = styled.h2`
 
 export const ItemsWrapper = styled.div`
   display: grid;
+  place-items: center;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(2, 1fr);
   grid-column-gap: 48px;
@@ -35,6 +38,7 @@ export const ItemsWrapper = styled.div`
   margin-bottom: 150px;
 
   @media screen and (max-width: 767px) {
+    grid-column-gap: 20px;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(2, 1fr);
   }
@@ -46,7 +50,9 @@ export const ItemsWrapper = styled.div`
 
 export const ItemsGroup = styled.div`
   height: 229px;
+
   @media screen and (max-width: 767px) {
+    height: 180px;
     &:nth-of-type(n + 5):nth-of-type(-n + 8) {
       display: none;
     }
@@ -63,7 +69,7 @@ export const ItemsImages = styled.img`
   height: 100%;
 `;
 
-export const ItemsTitle = styled.div`
+export const ItemsTitle = styled.p`
   font-size: 24px;
 `;
 

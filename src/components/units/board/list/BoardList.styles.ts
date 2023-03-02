@@ -8,6 +8,10 @@ export const SearchWrapper = styled.div`
 
 export const BoardListWrapper = styled.div`
   border-top: 2px solid black;
+
+  @media screen and (max-width: 767px) {
+    margin: 0px 30px;
+  }
 `;
 
 export const BoardItemsTop = styled.div`
@@ -30,6 +34,10 @@ export const ItemNumber = styled.div`
   vertical-align: middle;
   width: 10%;
   text-align: center;
+
+  @media screen and (max-width: 767px) {
+    width: 15%;
+  }
 `;
 
 export const ItemTitleTop = styled.div`
@@ -37,6 +45,10 @@ export const ItemTitleTop = styled.div`
   vertical-align: middle;
   width: 60%;
   text-align: center;
+
+  @media screen and (max-width: 767px) {
+    width: 55%;
+  }
 `;
 
 export const ItemTitle = styled.div`
@@ -44,6 +56,11 @@ export const ItemTitle = styled.div`
   vertical-align: middle;
   width: 60%;
   text-align: left;
+  padding-left: 10px;
+
+  @media screen and (max-width: 767px) {
+    width: 55%;
+  }
 `;
 
 export const ItemWriter = styled.div`
@@ -71,6 +88,10 @@ export const ItemDate = styled.div`
 export const BoardPageWrapper = styled.div`
   position: relative;
   margin-bottom: 50px;
+
+  @media screen and (max-width: 767px) {
+    margin: 0px 30px;
+  }
 `;
 
 export const BoardPage = styled.div`
@@ -131,8 +152,9 @@ export const Register = styled.div`
   }
 
   @media screen and (max-width: 767px) {
-    top: 50px;
-    left: 44%;
+    top: 60px;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
   @media screen and (min-width: 768px) and (max-width: 1023px) {
     left: 85%;

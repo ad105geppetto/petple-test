@@ -5,6 +5,10 @@ export const TitleWrapper = styled.div`
   margin-bottom: 20px;
   padding-top: 40px;
   border-top: 1px solid #999;
+
+  @media screen and (max-width: 767px) {
+    padding: 40px 30px 0px 30px;
+  }
 `;
 
 export const H5 = styled.h5`
@@ -12,12 +16,17 @@ export const H5 = styled.h5`
   padding-left: 10px;
 `;
 
+interface IProps {
+  isEdit: boolean;
+}
+
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
 
-  @media screen and (max-width: 610px) {
+  @media screen and (max-width: 767px) {
     flex-direction: column;
+    padding: ${(props: IProps) => (props.isEdit ? "0" : "0px 30px 0px 30px")};
   }
 `;
 
@@ -34,13 +43,17 @@ export const UserInput = styled.input`
     outline: none;
   }
 
-  @media screen and (max-width: 610px) {
+  @media screen and (max-width: 767px) {
     margin-right: 0;
   }
 `;
 
 export const CommentWrapper = styled.div`
   position: relative;
+
+  @media screen and (max-width: 767px) {
+    padding: ${(props: IProps) => (props.isEdit ? "0" : "0px 30px 0px 30px")};
+  }
 `;
 
 export const CommentInput = styled.input`
@@ -56,6 +69,10 @@ export const CommentLimit = styled.div`
   position: absolute;
   bottom: 16px;
   left: 21px;
+
+  @media screen and (max-width: 767px) {
+    left: ${(props: IProps) => (props.isEdit ? "21px" : "51px")};
+  }
 `;
 
 export const SubmitButton = styled.button`
@@ -72,5 +89,9 @@ export const SubmitButton = styled.button`
   &:hover {
     background-color: #000000;
     border: 2px solid #000000;
+  }
+
+  @media screen and (max-width: 767px) {
+    right: ${(props: IProps) => (props.isEdit ? "0px" : "30px")};
   }
 `;
