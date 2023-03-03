@@ -58,9 +58,6 @@ export default function LayoutHeader() {
       )}
       <S.Wapper>
         <S.LogoWapper>PETPLE</S.LogoWapper>
-        <S.SearchWapper>
-          <S.Search type="text" />
-        </S.SearchWapper>
         {accessToken ? (
           <S.Group>
             <S.LogoutWapper>

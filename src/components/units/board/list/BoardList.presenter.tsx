@@ -1,11 +1,19 @@
 import { getDate } from "../../../../commons/utils/utils";
 import { type IBoardListProps } from "./BoardList.types";
 import * as S from "./BoardList.styles";
+import { v4 as uuidv4 } from "uuid";
+import SearchBar from "../../searchbar/SearchBar.container";
+
+const SEPARATOR = uuidv4();
 
 export default function BoardListUI(props: IBoardListProps) {
   return (
     <>
-      <S.SearchWrapper></S.SearchWrapper>
+      <SearchBar
+        setStartPage={props.setStartPage}
+        setKeyword={props.setKeyword}
+        refetch={props.refetch}
+      />
       <S.BoardListWrapper>
         <S.BoardItemsTop>
           <S.ItemNumber>번호</S.ItemNumber>
@@ -24,7 +32,22 @@ export default function BoardListUI(props: IBoardListProps) {
                   (index + (props.currentPage - 1) * 10)}
               </S.ItemNumber>
             )}
-            <S.ItemTitle>{board.title}</S.ItemTitle>
+            <S.ItemTitle>
+              {board.title
+                .replaceAll(
+                  props.keyword,
+                  `${SEPARATOR}${props.keyword}${SEPARATOR}`
+                )
+                .split(`${SEPARATOR}`)
+                .map((el) => (
+                  <span
+                    key={uuidv4()}
+                    style={{ color: el === props.keyword ? "#749c06" : "" }}
+                  >
+                    {el}
+                  </span>
+                ))}
+            </S.ItemTitle>
             <S.ItemWriter>{board.writer}</S.ItemWriter>
             <S.ItemDate>{getDate(board.createdAt)}</S.ItemDate>
           </S.BoardItems>

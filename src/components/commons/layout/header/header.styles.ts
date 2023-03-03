@@ -32,10 +32,11 @@ export const LogoWapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 10%;
+  width: 15%;
   font-style: italic;
   font-size: 32px;
   font-weight: bold;
+  margin-left: 3px;
 
   @media screen and (max-width: 767px) {
     width: 30%;

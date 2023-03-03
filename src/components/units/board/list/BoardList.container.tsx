@@ -19,12 +19,11 @@ export default function BoardList() {
   const { data, refetch } = useQuery<
     Pick<IQuery, "fetchBoards" | "fetchBoardsCount">,
     IQueryFetchBoardsArgs | IQueryFetchBoardsCountArgs
-  >(FETCH_BOARDS_WITH_COUNT, {
-    variables: { page: currentPage },
-  });
+  >(FETCH_BOARDS_WITH_COUNT);
 
   const [startPage, setStartPage] = useState(1);
   const endPage = data ? Math.ceil(data.fetchBoardsCount / 10) : 1;
+  const [keyword, setKeyword] = useState("");
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -83,6 +82,9 @@ export default function BoardList() {
       currentPage={currentPage}
       endPage={endPage}
       pages={pages}
+      keyword={keyword}
+      setStartPage={setStartPage}
+      setKeyword={setKeyword}
       onClickMoveToBoardDetail={onClickMoveToBoardDetail}
       onClickMoveToBoardNew={onClickMoveToBoardNew}
       onClickFirstPage={onClickFirstPage}

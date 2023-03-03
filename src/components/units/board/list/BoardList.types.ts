@@ -4,7 +4,7 @@ import {
   type IQueryFetchBoardsCountArgs,
   type IQuery,
 } from "../../../../commons/types/generated/types";
-import { type MouseEvent } from "react";
+import { type MouseEvent, type Dispatch, type SetStateAction } from "react";
 
 export interface IBoardListProps {
   data: Pick<IQuery, "fetchBoards" | "fetchBoardsCount"> | undefined;
@@ -17,6 +17,9 @@ export interface IBoardListProps {
   currentPage: number;
   endPage: number;
   pages: number;
+  keyword: string;
+  setStartPage: Dispatch<SetStateAction<number>>;
+  setKeyword: Dispatch<SetStateAction<string>>;
   onClickMoveToBoardDetail: (id: string) => () => void;
   onClickMoveToBoardNew: () => void;
   onClickFirstPage: () => void;
