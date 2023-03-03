@@ -10,6 +10,7 @@ export default function BoardListUI(props: IBoardListProps) {
   return (
     <>
       <SearchBar
+        setCurrentPage={props.setCurrentPage}
         setStartPage={props.setStartPage}
         setKeyword={props.setKeyword}
         refetch={props.refetch}
@@ -65,7 +66,7 @@ export default function BoardListUI(props: IBoardListProps) {
             .map((_, idx) => (
               <S.PageButton
                 key={idx + props.startPage}
-                onClick={props.onClickButton}
+                onClick={props.onClickButton(idx + props.startPage)}
                 isActive={idx + props.startPage === props.currentPage}
               >
                 {idx + props.startPage}
