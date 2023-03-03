@@ -7,24 +7,21 @@ import {
 } from "../../../../commons/types/generated/types";
 import BoardListUI from "./BoardList.presenter";
 import { FETCH_BOARDS_WITH_COUNT } from "./BoardList.querys";
-import { useEffect, useState, type MouseEvent } from "react";
-import { useRecoilState } from "recoil";
-import { currentPageState } from "../../../../commons/store";
+import { useEffect, useState } from "react";
 
 export default function BoardList() {
   const router = useRouter();
   const [pages, setPages] = useState(10);
-  const [currentPage, setCurrentPage] = useRecoilState(currentPageState);
+  const [currentPage, setCurrentPage] = useState(1);
 
   const { data, refetch } = useQuery<
     Pick<IQuery, "fetchBoards" | "fetchBoardsCount">,
     IQueryFetchBoardsArgs | IQueryFetchBoardsCountArgs
-  >(FETCH_BOARDS_WITH_COUNT, {
-    variables: { page: currentPage },
-  });
+  >(FETCH_BOARDS_WITH_COUNT);
 
   const [startPage, setStartPage] = useState(1);
   const endPage = data ? Math.ceil(data.fetchBoardsCount / 10) : 1;
+  const [keyword, setKeyword] = useState("");
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -40,39 +37,39 @@ export default function BoardList() {
     void router.push(`boards/new`);
   };
 
-  const onClickFirstPage = () => {
+  const onClickFirstPage = async () => {
     if (currentPage === 1) return;
+    await refetch({ page: 1 });
     setStartPage(1);
     setCurrentPage(1);
-    void refetch({ page: 1 });
   };
-  const onClickLastPage = () => {
+  const onClickLastPage = async () => {
     if (startPage + pages <= endPage) {
+      await refetch({ page: endPage });
       setStartPage(
         endPage % pages === 0
           ? endPage - (pages - 1)
           : endPage - (endPage % pages) + 1
       );
       setCurrentPage(endPage);
-      void refetch({ page: endPage });
     }
   };
-  const onClickPrev = () => {
+  const onClickPrev = async () => {
     if (startPage === 1) return;
+    await refetch({ page: startPage - pages });
     setStartPage((prev) => prev - pages);
     setCurrentPage(startPage - pages);
-    void refetch({ page: startPage - pages });
   };
-  const onClickNext = () => {
+  const onClickNext = async () => {
     if (startPage + 10 <= endPage) {
+      await refetch({ page: startPage + pages });
       setStartPage((prev) => prev + pages);
       setCurrentPage(startPage + pages);
-      void refetch({ page: startPage + pages });
     }
   };
-  const onClickButton = (event: MouseEvent<HTMLDivElement>) => {
-    setCurrentPage(Number(event.currentTarget.innerText));
-    void refetch({ page: Number(event.currentTarget.innerText) });
+  const onClickButton = (page: number) => async () => {
+    await refetch({ page });
+    setCurrentPage(page);
   };
 
   return (
@@ -83,6 +80,10 @@ export default function BoardList() {
       currentPage={currentPage}
       endPage={endPage}
       pages={pages}
+      keyword={keyword}
+      setCurrentPage={setCurrentPage}
+      setStartPage={setStartPage}
+      setKeyword={setKeyword}
       onClickMoveToBoardDetail={onClickMoveToBoardDetail}
       onClickMoveToBoardNew={onClickMoveToBoardNew}
       onClickFirstPage={onClickFirstPage}
