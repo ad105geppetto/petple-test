@@ -18,8 +18,9 @@ export const Group = styled.div`
   width: 460px;
   margin-bottom: 50px;
 
-  @media screen and (max-width: 460px) {
+  @media screen and (max-width: 767px) {
     width: 100%;
+    padding: 0px 30px;
   }
 `;
 

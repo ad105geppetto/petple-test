@@ -90,7 +90,7 @@ export const BoardPageWrapper = styled.div`
   margin-bottom: 50px;
 
   @media screen and (max-width: 767px) {
-    margin: 0px 30px;
+    margin: 0px 30px 50px 30px;
   }
 `;
 

@@ -22,6 +22,10 @@ export const ModalWrapper = styled.div`
   overflow: hidden;
   background-color: #79a206;
   box-shadow: 5px 10px 10px 1px rgba(0, 0, 0, 0.3);
+
+  @media screen and (max-width: 767px) {
+    width: calc(100% - 30px);
+  }
 `;
 
 export const ModalHead = styled.div`

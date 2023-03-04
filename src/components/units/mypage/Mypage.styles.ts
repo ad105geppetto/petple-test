@@ -4,6 +4,13 @@ export const Title = styled.h1`
   font-size: 24px;
   font-weight: 700;
   padding-bottom: 50px;
+
+  @media screen and (max-width: 767px) {
+    font-size: 21px;
+    margin-top: 20px;
+    margin-left: 30px;
+    padding-bottom: 30px;
+  }
 `;
 
 export const InputWrapper = styled.div`
@@ -17,6 +24,7 @@ export const InputWrapper = styled.div`
   @media screen and (max-width: 767px) {
     flex-direction: column;
     align-items: flex-start;
+    margin: 0px 30px 20px 30px;
   }
 `;
 
@@ -54,5 +62,9 @@ export const Submit = styled.button`
   &:hover {
     background-color: #000000;
     transition: background-color 0.3s ease-in-out;
+  }
+
+  @media screen and (max-width: 767px) {
+    margin: 20px 30px 0px 0px;
   }
 `;
