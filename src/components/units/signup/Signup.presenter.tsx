@@ -3,6 +3,7 @@ import { type ISignupUIProps } from "./Signup.types";
 import ErrorModal from "../../commons/modal/error";
 
 export default function SignupUI(props: ISignupUIProps) {
+  console.log("hih");
   return (
     <S.Wrapper>
       {props.isOpen ? <ErrorModal onCancel={props.onClickCancel} /> : ""}
