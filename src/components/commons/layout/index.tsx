@@ -31,6 +31,10 @@ export const Body = styled.div`
   width: 80%;
   margin-left: 60px;
   margin-top: 64px;
+
+  @media screen and (max-width: 767px) {
+    margin-top: 64px;
+  }
 `;
 
 interface ILayoutProps {
