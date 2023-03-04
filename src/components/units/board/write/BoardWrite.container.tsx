@@ -132,8 +132,11 @@ export default function BoardWrite(props: IBoardWriteProps) {
       const resultFiles = await Promise.all(
         files.map((el) => {
           const formData = new FormData();
-          formData.append("image", el);
-          return axios.post("http://localhost:8080/upload", formData);
+
+          return axios.post(
+            String(process.env.NEXT_PUBLIC_AWS_IMAGE_UPLOAD),
+            formData
+          );
         })
       );
       const resultUrls = resultFiles.map((el) =>
@@ -183,7 +186,11 @@ export default function BoardWrite(props: IBoardWriteProps) {
         files.map((el) => {
           const formData = new FormData();
           formData.append("image", el);
-          return axios.post("http://localhost:8080/upload", formData);
+
+          return axios.post(
+            String(process.env.NEXT_PUBLIC_AWS_IMAGE_UPLOAD),
+            formData
+          );
         })
       );
       const resultUrls = resultFiles.map((el) =>
