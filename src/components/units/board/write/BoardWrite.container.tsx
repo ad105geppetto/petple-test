@@ -132,6 +132,7 @@ export default function BoardWrite(props: IBoardWriteProps) {
       const resultFiles = await Promise.all(
         files.map((el) => {
           const formData = new FormData();
+          formData.append("image", el);
 
           return axios.post(
             String(process.env.NEXT_PUBLIC_AWS_IMAGE_UPLOAD),
