@@ -79,20 +79,38 @@ export const ItemsPrice = styled.div`
 
 export default function Home() {
   const images = new Array(8).fill({
-    src: "https://htmldemo.net/lukani/lukani/assets/img/product/product1.jpg",
+    src: "https://htmldemo.net/lukani/lukani/assets/img/product/product",
+    title: "eget sagittis",
     alt: "image",
   });
+  const imagesTile = [
+    "commodo augue nisi",
+    "eget sagittis",
+    "fringilla augue",
+    "massa massa",
+    "placerat vestibulum",
+    "porro cook",
+    "sapien libero",
+    "vulputate rutrum",
+  ];
 
   return (
     <Container>
       <Wapper>
-        <Title>Our Products</Title>
+        <Title>PETPLE INTRO</Title>
         <ItemsWrapper>
-          {images.map((image, index) => (
+          {images.map((image: { src: string; alt: string }, index) => (
             <ItemsGroup key={index}>
-              <ItemsImages src={image.src} alt={image.alt} />
-              <ItemsTitle>Commodo Augue Nisi</ItemsTitle>
-              <ItemsPrice>10,000원</ItemsPrice>
+              <ItemsImages
+                src={`${image.src}${index + 1}.jpg`}
+                alt={image.alt}
+              />
+              <ItemsTitle>
+                {imagesTile[index]
+                  .split(" ")
+                  .map((el) => el.charAt(0).toUpperCase() + el.slice(1))
+                  .join(" ")}
+              </ItemsTitle>
             </ItemsGroup>
           ))}
         </ItemsWrapper>
