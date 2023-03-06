@@ -10,6 +10,16 @@
   <img src="https://img.shields.io/badge/Emotion-C43BAD?style=for-the-badge&logo=">
 </div>
 
+## 목차
+
+1. [Intro](#intro)
+2. [기능](#기능)
+3. [Wireframe](#wireframe)
+4. [구현](#구현)
+5. [Commit Convention](#commit-convention)
+
+</br>
+
 ## Intro
  반응형 웹 사이트 구현을 위한 프로젝트
  
@@ -27,20 +37,18 @@
  
 ## Wireframe
 
-![image](https://user-images.githubusercontent.com/92367032/222936488-bedd1f9b-db1e-4a04-9348-38a0cb2b47f5.png)
+<img src="https://user-images.githubusercontent.com/92367032/223073101-a8506be6-1414-413e-b461-4185fd0a57a8.png" width=800 height=600/> 
  
 ## 구현
 
 #### Landing Page
 <img src="https://user-images.githubusercontent.com/92367032/222942680-62e614a4-01f8-4b4a-bb23-7826d2b9e2d7.gif" /> 
 
-
 #### 자유게시판 목록
 <img src="https://user-images.githubusercontent.com/92367032/222942823-0e2cc6e7-f86d-4c5d-8d1f-89a0aedc7d88.gif"/> 
 
 #### 자유게시판 검색
 <img src="https://user-images.githubusercontent.com/92367032/222942862-03883c93-c2b9-4154-9fb4-2ce803b09c0a.gif"/>
-
 
 #### 자유게시판 등록
 <img src="https://user-images.githubusercontent.com/92367032/222942948-07ecece1-0986-410b-bceb-f83b7ad00a91.gif"/>
