@@ -26,11 +26,24 @@ export default function BoardDetailUI(props: IBoardDetailProps) {
       <S.SliderWrapper>
         <Slider {...settings}>
           {props.data?.fetchBoard.images?.length ? (
-            props.data?.fetchBoard.images?.map((image, index) => (
-              <S.ImageWrapper key={index}>
-                {<S.Image src={`${NEXT_PUBLIC_IMAGE_STORE_URI}/${image}`} />}
-              </S.ImageWrapper>
-            ))
+            props.data?.fetchBoard.images?.map((image, index) =>
+              props.data?.fetchBoard.images?.map((image, index) =>
+                image.includes("petple-file-image") ? (
+                  <S.ImageWrapper key={index}>
+                    {
+                      <S.Image
+                        src={`${NEXT_PUBLIC_IMAGE_STORE_URI}/${image}`}
+                      />
+                    }
+                  </S.ImageWrapper>
+                ) : (
+                  <S.ImageWrapper key={index}>
+                    <S.Image src={process.env.NEXT_PUBLIC_DEFAULT_IMAGE_URI} />
+                    <S.ImageText>이미지 없음</S.ImageText>
+                  </S.ImageWrapper>
+                )
+              )
+            )
           ) : (
             <S.ImageWrapper>
               <S.Image src={process.env.NEXT_PUBLIC_DEFAULT_IMAGE_URI} />
