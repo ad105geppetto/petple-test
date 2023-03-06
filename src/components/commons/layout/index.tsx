@@ -51,7 +51,7 @@ export default function Layout(props: ILayoutProps) {
       {router.asPath === "/" && <LayoutBanner />}
       <Container>
         <Wrapper>
-          {router.asPath === "/mypages" ? (
+          {router.pathname === "/mypages" ? (
             <SideBodyWrapper>
               <Side />
               <Body>{props.children}</Body>
