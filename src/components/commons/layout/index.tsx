@@ -28,15 +28,20 @@ export const SideBodyWrapper = styled.div`
 `;
 
 export const Body = styled.div`
-  width: 80%;
+  width: 70%;
   margin-left: 60px;
   margin-top: 64px;
 
   @media screen and (max-width: 767px) {
-    margin-top: 64px;
+    width: 100%;
+    margin-left: 0px;
+    margin-top: 20px;
+  }
+  @media screen and (min-width: 768px) and (max-width: 1023px) {
+    width: 65%;
+    margin-left: 0px;
   }
 `;
-
 interface ILayoutProps {
   children: JSX.Element;
 }
@@ -51,7 +56,7 @@ export default function Layout(props: ILayoutProps) {
       {router.asPath === "/" && <LayoutBanner />}
       <Container>
         <Wrapper>
-          {router.asPath === "/mypages" ? (
+          {router.pathname === "/mypages" ? (
             <SideBodyWrapper>
               <Side />
               <Body>{props.children}</Body>
