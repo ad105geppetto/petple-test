@@ -75,6 +75,7 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
                 onChange={props.onChangeUploadFile(index)}
                 type="file"
                 ref={(element) => {
+                  if (!props.fileRef.current) return;
                   props.fileRef.current[index] = element;
                 }}
                 accept={"image/jpeg, image/jpg, image/png"}

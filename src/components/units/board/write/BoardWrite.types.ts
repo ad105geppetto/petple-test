@@ -1,5 +1,5 @@
 import { type NextRouter } from "next/router";
-import { type ChangeEvent, type MutableRefObject } from "react";
+import { Dispatch, RefObject, SetStateAction, type ChangeEvent } from "react";
 import { type IQuery } from "../../../../commons/types/generated/types";
 
 export interface IBoardWriteProps {
@@ -7,12 +7,12 @@ export interface IBoardWriteProps {
   data?: Pick<IQuery, "fetchBoard"> | undefined;
   router: NextRouter;
   contents: string;
-  setContents: any;
+  setContents: Dispatch<SetStateAction<string>>;
 }
 
 export interface IBoardWriteUIProps {
   imageUrls: string[];
-  fileRef: MutableRefObject<HTMLInputElement[] | null[]>;
+  fileRef: RefObject<HTMLInputElement[] | null[] | null>;
   isEdit: boolean;
   data: Pick<IQuery, "fetchBoard"> | undefined;
   contents: string;
