@@ -26,7 +26,7 @@ jest.mock("next/router", () => ({
   useRouter: jest.fn(),
 }));
 
-describe("자유게시판 목록 페이지 Unit Test", () => {
+describe("자유게시판 목록 페이지 Unit Test & Integration Test", () => {
   describe("검색창 Component", () => {
     it("검색창이 존재합니다.", () => {
       render(

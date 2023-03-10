@@ -5,7 +5,7 @@ import BoardDetailUI from "../../../src/components/units/board/detail/BoardDetai
 import BoardDetail from "../../../src/components/units/board/detail/BoardDetail.container";
 import { useRouter } from "next/router";
 
-describe("자유게시판 상세페이지 Unit Test", () => {
+describe("자유게시판 상세페이지 Unit Test & Integration Test", () => {
   it("게시판 상세페이지 스냅샷 테스트", () => {
     const mockedUseRouter = jest.spyOn(require("next/router"), "useRouter");
     mockedUseRouter.mockImplementation(() => ({

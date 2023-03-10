@@ -14,7 +14,7 @@ import { RecoilRoot } from "recoil";
 
 jest.mock("next/router", () => ({ useRouter: jest.fn() }));
 
-describe("자유게시판 등록 페이지 Unit Test", () => {
+describe("자유게시판 등록 페이지 Unit Test & Integration Test", () => {
   it("작성자 입력창이 존재합니다.", async () => {
     const setContents = jest.fn();
     const router = useRouter();
