@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`마이페이지 Unit Test & Integration Test 마이페이지 스냅샷 테스트 1`] = `
+<div>
+  
+  
+  <h1
+    class="css-17p1ae5"
+  >
+    개인정보 
+    &gt;
+     비밀번호 변경
+  </h1>
+  <div
+    class="css-1lodiei"
+  >
+    새 비밀번호
+    <input
+      autocomplete="off"
+      class="css-198g93x"
+      placeholder="새 비밀번호를 입력해주세요."
+      type="password"
+    />
+  </div>
+  <div
+    class="css-1lodiei"
+  >
+    새 비밀번호 확인
+    <input
+      autocomplete="off"
+      class="css-198g93x"
+      placeholder="새 비밀번호를 확인해주세요."
+      type="password"
+    />
+  </div>
+  <button
+    class="css-11fm0ms"
+  >
+    비밀번호 변경
+  </button>
+</div>
+`;
