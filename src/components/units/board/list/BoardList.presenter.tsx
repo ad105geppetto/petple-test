@@ -25,6 +25,7 @@ export default function BoardListUI(props: IBoardListProps) {
         {props.data?.fetchBoards.map((board, index) => (
           <S.BoardItems
             key={board._id}
+            data-testid="boardItem"
             onClick={props.onClickMoveToBoardDetail(board._id)}
           >
             {props.data && (
@@ -66,6 +67,7 @@ export default function BoardListUI(props: IBoardListProps) {
             .map((_, idx) => (
               <S.PageButton
                 key={idx + props.startPage}
+                data-testid="pageButton"
                 onClick={props.onClickButton(idx + props.startPage)}
                 isActive={idx + props.startPage === props.currentPage}
               >

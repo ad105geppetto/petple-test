@@ -19,6 +19,7 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
           <S.H4>작성자</S.H4>
           <S.TitleInputWithNonMember
             type="text"
+            role="writer"
             onChange={props.onChangeWriter}
             value={
               props.isEdit
@@ -31,6 +32,7 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
           <S.H4>비밀번호</S.H4>
           <S.TitleInputWithNonMember
             type="password"
+            role="password"
             onChange={props.onChangePassword}
           />
         </S.TitleWrapper>
@@ -39,6 +41,7 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
         <S.H4>제목</S.H4>
         <S.TitleInput
           type="text"
+          role="title"
           onChange={props.onChangeTitle}
           defaultValue={props.data && String(props.data?.fetchBoard.title)}
         />
@@ -72,6 +75,7 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
                 onChange={props.onChangeUploadFile(index)}
                 type="file"
                 ref={(element) => {
+                  if (!props.fileRef.current) return;
                   props.fileRef.current[index] = element;
                 }}
                 accept={"image/jpeg, image/jpg, image/png"}
