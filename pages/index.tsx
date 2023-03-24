@@ -9,7 +9,16 @@ export const Container = styled.div`
 export const Wapper = styled.div`
   display: flex;
   flex-direction: column;
-  width: 1156px;
+  width: 1024px;
+
+  @media screen and (max-width: 767px) {
+    width: 100%;
+    margin: 0px 30px;
+  }
+  @media screen and (min-width: 768px) and (max-width: 1023px) {
+    width: 767px;
+    margin: 0px 30px;
+  }
 `;
 
 export const Title = styled.h2`
@@ -21,14 +30,38 @@ export const Title = styled.h2`
 
 export const ItemsWrapper = styled.div`
   display: grid;
+  place-items: center;
   grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(2, 1fr);
   grid-column-gap: 48px;
   grid-row-gap: 129px;
   margin-bottom: 150px;
+
+  @media screen and (max-width: 767px) {
+    grid-column-gap: 20px;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+  }
+  @media screen and (min-width: 768px) and (max-width: 1023px) {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+  }
 `;
 
 export const ItemsGroup = styled.div`
   height: 229px;
+
+  @media screen and (max-width: 767px) {
+    height: 180px;
+    &:nth-of-type(n + 5):nth-of-type(-n + 8) {
+      display: none;
+    }
+  }
+  @media screen and (min-width: 768px) and (max-width: 1023px) {
+    &:nth-of-type(n + 7):nth-of-type(-n + 8) {
+      display: none;
+    }
+  }
 `;
 
 export const ItemsImages = styled.img`
@@ -36,7 +69,7 @@ export const ItemsImages = styled.img`
   height: 100%;
 `;
 
-export const ItemsTitle = styled.div`
+export const ItemsTitle = styled.p`
   font-size: 24px;
 `;
 
@@ -46,20 +79,38 @@ export const ItemsPrice = styled.div`
 
 export default function Home() {
   const images = new Array(8).fill({
-    src: "https://htmldemo.net/lukani/lukani/assets/img/product/product1.jpg",
+    src: "https://htmldemo.net/lukani/lukani/assets/img/product/product",
+    title: "eget sagittis",
     alt: "image",
   });
+  const imagesTile = [
+    "commodo augue nisi",
+    "eget sagittis",
+    "fringilla augue",
+    "massa massa",
+    "placerat vestibulum",
+    "porro cook",
+    "sapien libero",
+    "vulputate rutrum",
+  ];
 
   return (
     <Container>
       <Wapper>
-        <Title>Our Products</Title>
+        <Title>PETPLE INTRO</Title>
         <ItemsWrapper>
-          {images.map((image, index) => (
+          {images.map((image: { src: string; alt: string }, index) => (
             <ItemsGroup key={index}>
-              <ItemsImages src={image.src} alt={image.alt} />
-              <ItemsTitle>Commodo Augue Nisi</ItemsTitle>
-              <ItemsPrice>10,000원</ItemsPrice>
+              <ItemsImages
+                src={`${image.src}${index + 1}.jpg`}
+                alt={image.alt}
+              />
+              <ItemsTitle>
+                {imagesTile[index]
+                  .split(" ")
+                  .map((el) => el.charAt(0).toUpperCase() + el.slice(1))
+                  .join(" ")}
+              </ItemsTitle>
             </ItemsGroup>
           ))}
         </ItemsWrapper>

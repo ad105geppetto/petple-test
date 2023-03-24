@@ -1,0 +1,100 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`로그인 Unit Test & Integration Test 회원가입 스냅샷 테스트 1`] = `
+<div>
+  <div
+    class="css-g4fya0"
+  >
+    
+    <h2
+      class="css-lqiix7"
+    >
+      펫플 
+      회원가입
+    </h2>
+    <div
+      class="css-1dy1q9i"
+    >
+      <h3
+        class="css-1lup52f"
+      >
+        <label
+          class="css-1j2v978"
+          for="email"
+        >
+          이메일
+          *
+        </label>
+      </h3>
+      <input
+        autocomplete="off"
+        class="css-10uky0u"
+        id="email"
+        placeholder="이메일"
+        type="text"
+      />
+      <h3
+        class="css-1lup52f"
+      >
+        <label
+          class="css-1j2v978"
+          for="password"
+        >
+          비밀번호
+          *
+        </label>
+      </h3>
+      <input
+        autocomplete="off"
+        class="css-10uky0u"
+        id="password"
+        placeholder="비밀번호"
+        type="password"
+      />
+      <h3
+        class="css-1lup52f"
+      >
+        <label
+          class="css-1j2v978"
+          for="password_check"
+        >
+          비밀번호 확인*
+        </label>
+      </h3>
+      <input
+        autocomplete="off"
+        class="css-10uky0u"
+        id="password_check"
+        placeholder="비밀번호 확인"
+        type="password"
+      />
+      <h3
+        class="css-1lup52f"
+      >
+        <label
+          class="css-1j2v978"
+          for="name"
+        >
+          이름*
+        </label>
+      </h3>
+      <input
+        autocomplete="off"
+        class="css-10uky0u"
+        id="name"
+        placeholder="이름"
+        type="text"
+      />
+    </div>
+    <div
+      class="css-1dy1q9i"
+    >
+      <button
+        class="css-1u35s9i"
+      >
+        가입하기
+      </button>
+    </div>
+  </div>
+</div>
+`;
