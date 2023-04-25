@@ -30,7 +30,21 @@
     - 모니터 1024px~
 - UI가 비슷한 페이지는 코드 재사용성을 높이고자 했습니다.
  
-- 배포 Link: [https:petple.store](https:petple.store)
+- ~~배포 Link: [https:petple.store](https:petple.store)~~
+  - **현재 AWS 비용 문제로 인해 배포를 중지하였습니다. 필요하시면 소프트웨어를 다운로드하신 후 확인해주시기 바랍니다.**
+
+  ### 설치
+  ```
+  yarn install 또는 npm install
+  ```
+  ### 실행
+  ```
+  yarn dev 또는 npm run dev
+  ```
+  ### 테스트
+  ```
+  yarn test 또는 npm run test
+  ```
 
 ## 기능
  - 자유게시판 생성/수정/읽기 기능
