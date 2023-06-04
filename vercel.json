@@ -6,7 +6,7 @@
       "methods": ["POST"],
       "dest": "https://backend-practice.codebootcamp.co.kr/graphql",
       "headers": {
-        "Access-Control-Allow-Origin": "https://petple-test.vercel.app"
+        "Access-Control-Allow-Origin": "http://localhost:3000"
       }
     }
   ]
