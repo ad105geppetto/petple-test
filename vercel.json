@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/graphql/:path*",
+      "destination": "https://backend-practice.codebootcamp.co.kr/:path*"
+    }
+  ]
+}
