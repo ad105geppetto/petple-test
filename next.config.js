@@ -8,8 +8,8 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: "/graphql",
-        destination: "https://backend-practice.codebootcamp.co.kr",
+        source: "/graphql/:path*",
+        destination: "https://backend-practice.codebootcamp.co.kr/:path*",
       },
     ];
   },
