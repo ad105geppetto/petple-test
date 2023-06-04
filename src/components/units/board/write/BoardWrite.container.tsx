@@ -4,9 +4,10 @@ import {
   type IMutationUpdateBoardArgs,
   type IMutation,
   type IMutationCreateBoardArgs,
+  IMutationUploadFileArgs,
 } from "../../../../commons/types/generated/types";
 import BoardWriteUI from "./BoardWrite.presenter";
-import { CREATE_BOARD, UPDATE_BOARD } from "./BoardWrite.querys";
+import { CREATE_BOARD, UPDATE_BOARD, UPLOAD_FILE } from "./BoardWrite.querys";
 import { type IBoardWriteProps } from "./BoardWrite.types";
 import axios from "axios";
 import { FETCH_BOARD } from "../detail/BoardDetail.querys";
@@ -24,6 +25,10 @@ export default function BoardWrite(props: IBoardWriteProps) {
 
   const setModalMessage = useSetRecoilState(modalMessageState);
 
+  const [uploadFile] = useMutation<
+    Pick<IMutation, "uploadFile">,
+    IMutationUploadFileArgs
+  >(UPLOAD_FILE);
   const [createBoard] = useMutation<
     Pick<IMutation, "createBoard">,
     IMutationCreateBoardArgs
@@ -39,7 +44,7 @@ export default function BoardWrite(props: IBoardWriteProps) {
       },
     ],
   });
-
+  console.log("hihi");
   const onChangeWriter = (event: ChangeEvent<HTMLInputElement>) => {
     setWriter(event.target.value);
   };
@@ -63,7 +68,7 @@ export default function BoardWrite(props: IBoardWriteProps) {
   const onChangeUploadFile =
     (index: number) => (event: ChangeEvent<HTMLInputElement>) => {
       const file = event.target.files?.[0];
-
+      console.log(file);
       if (!file?.size) {
         setIsOpen(true);
         setModalMessage("파일이 없습니다.");
@@ -130,16 +135,9 @@ export default function BoardWrite(props: IBoardWriteProps) {
 
     try {
       const resultFiles = await Promise.all(
-        files.map((el) => {
-          const formData = new FormData();
-          formData.append("image", el);
-
-          return axios.post(
-            String(process.env.NEXT_PUBLIC_AWS_IMAGE_UPLOAD),
-            formData
-          );
-        })
+        files.map((el) => el && uploadFile({ variables: { file: el } }))
       );
+
       const resultUrls = resultFiles.map((el) =>
         el.data ? el.data?.uploadFile.url : ""
       );
@@ -184,15 +182,7 @@ export default function BoardWrite(props: IBoardWriteProps) {
 
     try {
       const resultFiles = await Promise.all(
-        files.map((el) => {
-          const formData = new FormData();
-          formData.append("image", el);
-
-          return axios.post(
-            String(process.env.NEXT_PUBLIC_AWS_IMAGE_UPLOAD),
-            formData
-          );
-        })
+        files.map((el) => el && uploadFile({ variables: { file: el } }))
       );
       const resultUrls = resultFiles.map((el) =>
         el.data ? el.data?.uploadFile.url : ""
