@@ -135,9 +135,6 @@ export default function Signup(props: ISignupProps) {
       void router.replace("/boards");
     } catch (error) {
       if (error instanceof Error) {
-        console.log(error.name);
-        console.log(error.stack);
-        console.log(error.message);
         setIsOpen(true);
         setModalMessage("이미 존재하는 회원입니다.");
       }
